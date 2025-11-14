@@ -26,14 +26,14 @@ class Personaje {
     }
 
     class Inventario {
-      - unordered_map<string, Item*>: int
+      - map<string, Item*>: int
       + agregarItem(Item* item)
       + obtenerItem(string id) : Item*
       + asignarA(Personaje* p, string itemId) : bool
     }
 
     class Guild {
-      - unordered_map<string, Personaje*>: heroes 
+      - map<string, Personaje*>: heroes 
       + agregarHeroe(Personaje* p)
       + obtenerHeroe(string id) : Personaje*
       + listarHeroes()
