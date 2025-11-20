@@ -1,20 +1,22 @@
 #ifndef PROYECTOFINAL20252_EL_GRAN_TORNEO_DE_LA_ARENA_PROYECTO_MANUELR_LUPIM_OBJETOMAGICO_H
 #define PROYECTOFINAL20252_EL_GRAN_TORNEO_DE_LA_ARENA_PROYECTO_MANUELR_LUPIM_OBJETOMAGICO_H
 
-
-#include <unordered_map>
 #include <string>
 
 class Personaje;
 
-class Inventario {
+class ObjetoMagico {
 public:
-    void agregarTipo(const std::string &nombre, int cantidad);
-    bool asignar(Personaje *p, const std::string &tipo);
-    void mostrar() const;
+    ObjetoMagico(const std::string &nombre, int usos);
+    virtual ~ObjetoMagico();
 
-private:
-    std::unordered_map<std::string,int> stock;
+    const std::string& getNombre() const;
+    int getUsos() const;
+
+    virtual void usar(Personaje *objetivo);
+
+protected:
+    std::string nombre;
+    int usos;
 };
-
 #endif //PROYECTOFINAL20252_EL_GRAN_TORNEO_DE_LA_ARENA_PROYECTO_MANUELR_LUPIM_OBJETOMAGICO_H
