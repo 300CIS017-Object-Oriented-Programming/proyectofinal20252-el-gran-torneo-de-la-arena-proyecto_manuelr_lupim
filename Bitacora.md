@@ -1,3 +1,6 @@
+**Primer Diagrama UML**
+```mermaid
+
 classDiagram
 
     %% ----------- Clase base -----------
@@ -58,7 +61,8 @@ classDiagram
     }
 
     %% ----------- Relaciones -----------
-    Guild "1" o-- "*" Personaje
+    Guild "1" o -- "*" Personaje
     Inventario "1" -- "*" ObjetoMagico
     Personaje "0..2" o-- ObjetoMagico
     Arena "1" ..> Personaje
+```
