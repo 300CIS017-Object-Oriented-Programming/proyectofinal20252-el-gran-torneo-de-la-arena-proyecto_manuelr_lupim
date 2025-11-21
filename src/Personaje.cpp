@@ -45,7 +45,7 @@ void Personaje::usarObjeto(int index, Personaje *objetivo) {
 
 void Guerrero::habilidadEspecial(Personaje *objetivo) {
     if (!estaVivo() || !objetivo) return;
-    objetivo->getVida -= (ataque + 5);
+    objetivo->Vida -= (ataque + 5);
     if (objetivo->vida < 0) objetivo->vida = 0;
     std::cout << nombre << " ejecuta golpazo\n";
 }
