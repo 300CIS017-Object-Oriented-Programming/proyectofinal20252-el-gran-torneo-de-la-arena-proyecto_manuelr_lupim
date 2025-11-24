@@ -13,4 +13,6 @@ add_executable(proyectofinal20252_el_gran_torneo_de_la_arena_proyecto_manuelr_lu
         src/Guild.cpp
         src/Guild.h
         src/Arena.cpp
-        src/Arena.h)
+        src/Arena.h
+        src/Heroe.cpp
+        src/Heroe.h)
