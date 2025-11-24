@@ -49,4 +49,15 @@ public:
     void habilidadEspecial(Personaje *objetivo) override;
 };
 
+class MagoOscuro : public Personaje {
+public:
+    using Personaje::Personaje;
+    void habilidadEspecial(Personaje *objetivo) override;
+};
+
+class Tanque : public Personaje {
+public:
+    using Personaje::Personaje;
+    void habilidadEspecial(Personaje *objetivo) override;
+};
 #endif //PROYECTOFINAL20252_EL_GRAN_TORNEO_DE_LA_ARENA_PROYECTO_MANUELR_LUPIM_PERSONAJE_H
