@@ -14,6 +14,10 @@
 #include <fstream>
 #include "DagaSombria.h"
 
+using std::cin;
+using std::cout;
+using std::endl;
+
 Guild::Guild(string nombre) : nombreGuild(nombre), contadorId(1) {}
 
 Guild::~Guild() {
@@ -38,4 +42,63 @@ void Guild::inicializarHeroes() {
     agregarObjeto(new DanioElectrico(2));
     agregarObjeto(new Tornado(2));
     agregarObjeto(new DagaSombria(3));
+}
+
+void Guild::agregarHeroe(Personaje* heroe) {
+    if (!heroe) return;
+
+    string clave = heroe->getNombre();
+    if (heroes.find(clave) == heroes.end()) {
+        heroes[clave] = heroe;
+        cout << "Heroe " << heroe->getNombre() << " agregado a " << nombreGuild << endl;
+    } else {
+        cout << "Ya existe un heroe con ese nombre." << endl;
+        delete heroe;
+    }
+}
+
+void Guild::eliminarHeroe(string nombre) {
+    auto it = heroes.find(nombre);
+    if (it != heroes.end()) {
+        delete it->second;
+        heroes.erase(it);
+        cout << "Heroe " << nombre << " eliminado." << endl;
+    } else {
+        cout << "Heroe no encontrado." << endl;
+    }
+}
+
+Personaje* Guild::buscarHeroe(string nombre) {
+    auto it = heroes.find(nombre);
+    return (it != heroes.end()) ? it->second : nullptr;
+}
+
+void Guild::listarHeroes() const {
+    cout << "\n=== Heroes de " << nombreGuild << " ===" << endl;
+    if (heroes.empty()) {
+        cout << "No hay heroes en la guild." << endl;
+        return;
+    }
+
+    for (const auto& par : heroes) {
+        par.second->mostrarInfo();
+    }
+}
+
+void Guild::agregarObjeto(ObjetoMagico* objeto) {
+    if (objeto) {
+        inventario.push_back(objeto);
+    }
+}
+
+void Guild::listarInventario() const {
+    cout << "\n=== Inventario de Objetos Magicos ===" << endl;
+    if (inventario.empty()) {
+        cout << "No hay objetos en el inventario." << endl;
+        return;
+    }
+
+    for (const ObjetoMagico* obj : inventario) {
+        obj->mostrarInfo();
+    }
 }
