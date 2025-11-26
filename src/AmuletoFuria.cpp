@@ -16,4 +16,5 @@ void AmuletoFuria::usar(Personaje* objetivo) {
 
     cout << objetivo->getNombre() << " usa Amuleto de Furia. Ataque aumentado en "
          << aumento << " puntos." << endl;
+
 }
