@@ -148,3 +148,125 @@ void Arena::iniciarCombate() {
                         idx++;
                     }
                 }
+
+                                cout << "Seleccione objeto (0 para cancelar): ";
+                int objIdx;
+                cin >> objIdx;
+
+                if (objIdx > 0 && objIdx <= inventario.size()) {
+                    ObjetoMagico* objSeleccionado = inventario[objIdx - 1];
+
+                    if (objSeleccionado->getStock() > 0) {
+                        // Determinar si el objeto es ofensivo o defensivo
+                        string nombreObj = objSeleccionado->getNombre();
+
+                        if (nombreObj == "Pocion de Vida" || nombreObj == "Amuleto de Furia"
+                            || nombreObj == "Escudo Bendito") {
+                            // Usar en el mismo heroe
+                            objSeleccionado->usar(heroe);
+                            objSeleccionado->decrementarStock();
+                            objetosUsados++;
+                        } else {
+                            // Objetos ofensivos: seleccionar enemigo
+                            cout << "Seleccione objetivo enemigo (1-" << oponentesVivos.size() << "): ";
+                            int targetIdx;
+                            cin >> targetIdx;
+
+                            if (targetIdx >= 1 && targetIdx <= oponentesVivos.size()) {
+                                objSeleccionado->usar(oponentesVivos[targetIdx - 1]);
+                                objSeleccionado->decrementarStock();
+                                objetosUsados++;
+                            }
+                        }
+                    } else {
+                        cout << "No hay stock de ese objeto." << endl;
+                    }
+                } else {
+                    cout << "Accion cancelada." << endl;
+                }
+
+            } else {
+                cout << "Opcion invalida. Se pierde el turno." << endl;
+            }
+
+            cout << "\nPresione ENTER para continuar...";
+            cin.ignore();
+            cin.get();
+        }
+
+        if (equipoEliminado(oponentes)) {
+            mostrarResumen(guildJugador->getNombre());
+            break;
+        }
+
+        // ============= TURNO DE LOS OPONENTES (IA) =============
+        cout << "\n\n>>> TURNO DE LOS OPONENTES <<<" << endl;
+
+        for (Personaje* oponente : oponentes) {
+            if (!oponente->estaVivo()) continue;
+
+            vector<Personaje*> heroesVivos2 = guildJugador->getHeroesVivos();
+            if (heroesVivos2.empty()) break;
+
+            // IA: selecciona objetivo aleatorio
+            Personaje* objetivo = heroesVivos2[rand() % heroesVivos2.size()];
+
+            if (oponente->getRol() == "Sanador" && rand() % 3 == 0) {
+                Sanador* sanador = dynamic_cast<Sanador*>(oponente);
+                if (sanador) {
+                    vector<Personaje*> oponentesVivos;
+                    for (Personaje* op : oponentes) {
+                        if (op->estaVivo()) oponentesVivos.push_back(op);
+                    }
+                    sanador->curarAliado(oponentesVivos);
+                }
+            } else {
+                oponente->realizarAccion(objetivo);
+            }
+
+            if (!objetivo->estaVivo()) {
+                cout << "*** " << objetivo->getNombre() << " ha sido DERROTADO! ***" << endl;
+            }
+        }
+
+        if (equipoEliminado(guildJugador->getHeroesVivos())) {
+            mostrarResumen("Equipo Oponente");
+            break;
+        }
+
+        turnoActual++;
+
+        cout << "\nPresione ENTER para continuar al siguiente turno...";
+        cin.ignore();
+        cin.get();
+    }
+}
+
+bool Arena::equipoEliminado(const vector<Personaje*>& equipo) const {
+    for (Personaje* p : equipo) {
+        if (p->estaVivo()) return false;
+    }
+    return true;
+}
+
+void Arena::mostrarResumen(const string& ganador) const {
+    cout << "\n========================================" << endl;
+    cout << "=== FIN DEL COMBATE ===" << endl;
+    cout << "========================================" << endl;
+    cout << " Equipo ganador: " << ganador << endl;
+    cout << "  Duracion: " << turnoActual << " turnos" << endl;
+    cout << " Objetos usados: " << objetosUsados << endl;
+
+    if (ganador == guildJugador->getNombre()) {
+        cout << "\n Heroes supervivientes:" << endl;
+        vector<Personaje*> supervivientes = guildJugador->getHeroesVivos();
+        for (Personaje* h : supervivientes) {
+            cout << "  Batallaa  " << h->getNombre() << " - Vida restante: "
+                 << h->getVida() << endl;
+        }
+        cout << "\n¡Victoria para " << guildJugador->getNombre() << "!" << endl;
+    } else {
+        cout << "\n Derrota... Todos los heroes han caido." << endl;
+    }
+    cout << "========================================" << endl;
+}
