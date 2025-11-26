@@ -8,14 +8,10 @@ add_executable(proyectofinal20252_el_gran_torneo_de_la_arena_proyecto_manuelr_lu
         src/Personaje.h
         src/ObjetoMagico.cpp
         src/ObjetoMagico.h
-        src/Inventario.cpp
-        src/Inventario.h
         src/Guild.cpp
         src/Guild.h
         src/Arena.cpp
         src/Arena.h
-        src/Heroe.cpp
-        src/Heroe.h
         src/Guerrero.cpp
         src/Guerrero.h
         src/Mago.cpp
@@ -25,4 +21,16 @@ add_executable(proyectofinal20252_el_gran_torneo_de_la_arena_proyecto_manuelr_lu
         src/Berserker.cpp
         src/Berserker.h
         src/Lupasos.cpp
-        src/Lupasos.h)
+        src/Lupasos.h
+        src/PocionVida.cpp
+        src/PocionVida.h
+        src/EscudoBendito.cpp
+        src/EscudoBendito.h
+        src/AmuletoFuria.cpp
+        src/AmuletoFuria.h
+        src/DagaSombria.cpp
+        src/DagaSombria.h
+        src/DanioElectrico.cpp
+        src/DanioElectrico.h
+        src/Tornado.cpp
+        src/Tornado.h)

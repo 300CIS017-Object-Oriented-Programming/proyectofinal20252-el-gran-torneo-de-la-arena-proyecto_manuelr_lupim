@@ -1,0 +1,12 @@
+#ifndef PROYECTOFINAL20252_EL_GRAN_TORNEO_DE_LA_ARENA_PROYECTO_MANUELR_LUPIM_AMULETOFURIA_H
+#define PROYECTOFINAL20252_EL_GRAN_TORNEO_DE_LA_ARENA_PROYECTO_MANUELR_LUPIM_AMULETOFURIA_H
+
+#include "ObjetoMagico.h"
+
+class AmuletoFuria : public ObjetoMagico {
+public:
+    AmuletoFuria(int stock);
+    void usar(Personaje* objetivo) override;
+};
+
+#endif //PROYECTOFINAL20252_EL_GRAN_TORNEO_DE_LA_ARENA_PROYECTO_MANUELR_LUPIM_AMULETOFURIA_H

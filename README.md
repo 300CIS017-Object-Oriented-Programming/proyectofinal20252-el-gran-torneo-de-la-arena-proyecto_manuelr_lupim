@@ -35,7 +35,7 @@ classDiagram
         + void::habilidadEspecial()
     }
 
-    %% ----------- Objeto Mágico -----------
+    %% ----------- Objeto Magico -----------
     class ObjetoMagico {
         - string:nombre
         - int:usos
