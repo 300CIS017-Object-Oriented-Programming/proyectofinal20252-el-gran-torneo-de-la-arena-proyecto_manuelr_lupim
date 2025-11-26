@@ -29,4 +29,6 @@ add_executable(proyectofinal20252_el_gran_torneo_de_la_arena_proyecto_manuelr_lu
         src/EscudoBendito.cpp
         src/EscudoBendito.h
         src/AmuletoFuria.cpp
-        src/AmuletoFuria.h)
+        src/AmuletoFuria.h
+        src/DagaSombria.cpp
+        src/DagaSombria.h)

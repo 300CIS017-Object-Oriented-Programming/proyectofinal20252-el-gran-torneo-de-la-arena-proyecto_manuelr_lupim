@@ -28,11 +28,11 @@ int main() {
     heroePrincipal = guild.obtenerHeroe(idElegido);
 
     if (!heroePrincipal) {
-        std::cout << "ID inválido. Se asigna el primero automáticamente.\n";
+        std::cout << "ID invalido. Se asigna el primero automaticamente.\n";
         heroePrincipal = hs[0];
     }
 
-    std::cout << "Tu héroe será: " << heroePrincipal->getNombre() << "\n\n";
+    std::cout << "Tu héroe sera: " << heroePrincipal->getNombre() << "\n\n";
 
     // Crear prototipos de objetos en el inventario
     inventario.crearTipo("PocionVida", new PocionVida(), 3);

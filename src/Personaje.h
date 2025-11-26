@@ -39,5 +39,6 @@ public:
 
     void recibirDanio(int danio);
     void curar(int cantidad);
+    void recibirDanioDirecto(int cantidad); //sirve para utilizar la daga sombria
 };
 #endif //PROYECTOFINAL20252_EL_GRAN_TORNEO_DE_LA_ARENA_PROYECTO_MANUELR_LUPIM_PERSONAJE_H

@@ -37,6 +37,11 @@ void Personaje::curar(int cantidad) {
     if (vida > vidaMaxima) vida = vidaMaxima;
 }
 
+void Personaje::recibirDanioDirecto(int cantidad) {
+    this->vida -= cantidad;
+    if (this->vida < 0) this->vida = 0;
+}
+
 void Personaje::mostrarInfo() const {
     cout << "Nombre: " << nombre << " | Rol: " << rol
          << " | Nivel: " << nivel << " | Vida: " << vida
