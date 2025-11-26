@@ -1,0 +1,13 @@
+#ifndef PROYECTOFINAL20252_EL_GRAN_TORNEO_DE_LA_ARENA_PROYECTO_MANUELR_LUPIM_DANIOELECTRICO_H
+#define PROYECTOFINAL20252_EL_GRAN_TORNEO_DE_LA_ARENA_PROYECTO_MANUELR_LUPIM_DANIOELECTRICO_H
+
+#include "ObjetoMagico.h"
+
+class DanioElectrico : public ObjetoMagico {
+public:
+    DanioElectrico(int stock);
+    void usar(Personaje* objetivo) override;
+};
+
+
+#endif //PROYECTOFINAL20252_EL_GRAN_TORNEO_DE_LA_ARENA_PROYECTO_MANUELR_LUPIM_DANIOELECTRICO_H

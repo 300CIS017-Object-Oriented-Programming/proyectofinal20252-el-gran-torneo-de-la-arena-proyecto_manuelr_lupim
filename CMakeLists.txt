@@ -31,4 +31,8 @@ add_executable(proyectofinal20252_el_gran_torneo_de_la_arena_proyecto_manuelr_lu
         src/AmuletoFuria.cpp
         src/AmuletoFuria.h
         src/DagaSombria.cpp
-        src/DagaSombria.h)
+        src/DagaSombria.h
+        src/DanioElectrico.cpp
+        src/DanioElectrico.h
+        src/Tornado.cpp
+        src/Tornado.h)
