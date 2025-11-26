@@ -17,3 +17,19 @@ void Guerrero::realizarAccion(Personaje* objetivo) {
         return;
     }
 
+    int danio = ataque;
+    bool critico = (rand() % 100) < (probabilidadCritico * 100);
+
+    if (critico) {
+        danio *= 2;
+        cout << nombre << " realiza un GOLPE CRITICO" << endl;
+    }
+
+    cout << nombre << " ataca a " << objetivo->getNombre()
+         << " con su espada. Dano: " << danio << endl;
+
+    objetivo->recibirDanio(danio);
+
+    cout << objetivo->getNombre() << " tiene "
+         << objetivo->getVida() << " puntos de vida." << endl;
+}
