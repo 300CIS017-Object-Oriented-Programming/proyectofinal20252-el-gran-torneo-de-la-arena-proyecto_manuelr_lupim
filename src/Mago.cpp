@@ -14,3 +14,19 @@ void Mago::realizarAccion(Personaje* objetivo) {
         cout << nombre << " no tiene objetivo valido." << endl;
         return;
     }
+
+    int danioExtra = rand() % 15 + 5;
+    int danio = ataque + danioExtra;
+
+    cout << nombre << " lanza un hechizo arcano contra "
+         << objetivo->getNombre() << ". Dano magico: " << danio << endl;
+
+    int defensaIgnorada = objetivo->getDefensa() / 2;
+    int vidaAntes = objetivo->getVida();
+    objetivo->recibirDanio(danio);
+    int danioReal = vidaAntes - objetivo->getVida();
+
+    cout << objetivo->getNombre() << " recibe " << danioReal
+         << " de dano (defensa parcialmente ignorada). Vida restante: "
+         << objetivo->getVida() << endl;
+}
