@@ -2,21 +2,26 @@
 #define PROYECTOFINAL20252_EL_GRAN_TORNEO_DE_LA_ARENA_PROYECTO_MANUELR_LUPIM_OBJETOMAGICO_H
 
 #include <string>
-
-class Personaje;
+#include "Personaje.h"
+using std::string;
 
 class ObjetoMagico {
+protected:
+    string nombre;
+    string descripcion;
+    int stock;
+
 public:
-    ObjetoMagico(const std::string &nombre, int usos);
+    ObjetoMagico(string n, string desc, int s);
     virtual ~ObjetoMagico();
 
-    const std::string& getNombre() const;
-    int getUsos() const;
+    string getNombre() const;
+    string getDescripcion() const;
+    int getStock() const;
+    void decrementarStock();
+    void incrementarStock();
 
-    virtual void usar(Personaje *objetivo);
-
-protected:
-    std::string nombre;
-    int usos;
+    virtual void usar(Personaje* objetivo) = 0;
+    virtual void mostrarInfo() const;
 };
 #endif //PROYECTOFINAL20252_EL_GRAN_TORNEO_DE_LA_ARENA_PROYECTO_MANUELR_LUPIM_OBJETOMAGICO_H

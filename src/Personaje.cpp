@@ -1,64 +1,45 @@
 #include "Personaje.h"
-#include "ObjetoMagico.h"
 #include <iostream>
 
-Personaje::Personaje(int id_, const std::string &n, int v, int a, const std::string &t)
-: id(id_), nombre(n), vida(v), ataque(a), tipo(t) {}
+using std::endl;
+using std::cout;
 
-Personaje::~Personaje() {
-    for (auto o : objetos) delete o;
-}
+Personaje::Personaje(string n, int nv, int v, int a, int d, string r)
+    : nombre(n), nivel(nv), vida(v), vidaMaxima(v), ataque(a), defensa(d), rol(r) {}
 
-int Personaje::getId() const { return id; }
-const std::string& Personaje::getNombre() const { return nombre; }
+Personaje::~Personaje() {}
+
+string Personaje::getNombre() const { return nombre; }
+int Personaje::getNivel() const { return nivel; }
 int Personaje::getVida() const { return vida; }
+int Personaje::getAtaque() const { return ataque; }
+int Personaje::getDefensa() const { return defensa; }
+string Personaje::getRol() const { return rol; }
 bool Personaje::estaVivo() const { return vida > 0; }
 
-void Personaje::atacar(Personaje *objetivo) {
-    if (!estaVivo() || !objetivo || !objetivo->estaVivo()) return;
-    objetivo->vida -= ataque;
-    if (objetivo->vida < 0) objetivo->vida = 0;
-    std::cout << nombre << " ataca a " << objetivo->nombre << " por " << ataque << "\n";
+void Personaje::setVida(int v) {
+    vida = v;
+    if (vida > vidaMaxima) vida = vidaMaxima;
 }
 
-void Personaje::habilidadEspecial(Personaje *objetivo) {
-    if (!estaVivo() || !objetivo) return;
-    objetivo->vida -= ataque * 2;
-    if (objetivo->vida < 0) objetivo->vida = 0;
-    std::cout << nombre << " usa habilidad especial en " << objetivo->nombre << "\n";
+void Personaje::setAtaque(int a) { ataque = a; }
+void Personaje::setDefensa(int d) { defensa = d; }
+
+void Personaje::recibirDanio(int danio) {
+    int danioReal = danio - defensa;
+    if (danioReal < 0) danioReal = 0;
+    vida -= danioReal;
+    if (vida < 0) vida = 0;
 }
 
-bool Personaje::agregarObjeto(ObjetoMagico *obj) {
-    if (objetos.size() >= 2) return false;
-    objetos.push_back(obj);
-    return true;
+void Personaje::curar(int cantidad) {
+    vida += cantidad;
+    if (vida > vidaMaxima) vida = vidaMaxima;
 }
 
-void Personaje::usarObjeto(int index, Personaje *objetivo) {
-    if (index < 0 || index >= objetos.size()) return;
-    objetos[index]->usar(objetivo);
-    if (objetos[index]->getUsos() <= 0) {
-        delete objetos[index];
-        objetos.erase(objetos.begin() + index);
-    }
-}
-
-void Guerrero::habilidadEspecial(Personaje *objetivo) {
-    if (!estaVivo() || !objetivo) return;
-    objetivo->Vida -= (ataque + 5);
-    if (objetivo->vida < 0) objetivo->vida = 0;
-    std::cout << nombre << " ejecuta golpazo\n";
-}
-
-void Mago::habilidadEspecial(Personaje *objetivo) {
-    if (!estaVivo() || !objetivo) return;
-    objetivo->vida -= (ataque + 8);
-    if (objetivo->vida < 0) objetivo->vida = 0;
-    std::cout << nombre << " lanza hechizo\n";
-}
-
-void Sanador::habilidadEspecial(Personaje *objetivo) {
-    if (!estaVivo() || !objetivo) return;
-    objetivo->vida += 10;
-    std::cout << nombre << " cura a " << objetivo->nombre << "\n";
+void Personaje::mostrarInfo() const {
+    cout << "Nombre: " << nombre << " | Rol: " << rol
+         << " | Nivel: " << nivel << " | Vida: " << vida
+         << "/" << vidaMaxima << " | Ataque: " << ataque
+         << " | Defensa: " << defensa << endl;
 }
