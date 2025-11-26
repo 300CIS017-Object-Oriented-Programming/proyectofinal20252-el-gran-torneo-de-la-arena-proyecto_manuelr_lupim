@@ -1,6 +1,6 @@
 #include "arena.h"
 #include "personaje.h"
-#include <iostream>
+
 
 void Arena::cargarEquipos(const std::vector<Personaje*> &a, const std::vector<Personaje*> &b) {
     eq1 = a;
