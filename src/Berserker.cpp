@@ -16,3 +16,12 @@ void Berserker::activarFuria() {
         cout << "¡" << nombre << " entra en MODO FURIA! Ataque aumentado pero defensa reducida." << endl;
     }
 }
+
+void Berserker::desactivarFuria() {
+    if (modoFuria) {
+        modoFuria = false;
+        ataque = ataque / 1.5;
+        defensa = defensa * 2;
+        cout << nombre << " sale del modo furia y recupera su defensa." << endl;
+    }
+}

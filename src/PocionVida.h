@@ -1,0 +1,13 @@
+#ifndef PROYECTOFINAL20252_EL_GRAN_TORNEO_DE_LA_ARENA_PROYECTO_MANUELR_LUPIM_POCIONVIDA_H
+#define PROYECTOFINAL20252_EL_GRAN_TORNEO_DE_LA_ARENA_PROYECTO_MANUELR_LUPIM_POCIONVIDA_H
+
+
+#include "ObjetoMagico.h"
+
+class PocionVida : public ObjetoMagico {
+public:
+    PocionVida(int stock);
+    void usar(Personaje* objetivo) override;
+};
+
+#endif //PROYECTOFINAL20252_EL_GRAN_TORNEO_DE_LA_ARENA_PROYECTO_MANUELR_LUPIM_POCIONVIDA_H

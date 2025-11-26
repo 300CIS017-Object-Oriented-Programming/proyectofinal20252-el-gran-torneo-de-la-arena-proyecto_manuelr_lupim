@@ -23,4 +23,10 @@ add_executable(proyectofinal20252_el_gran_torneo_de_la_arena_proyecto_manuelr_lu
         src/Berserker.cpp
         src/Berserker.h
         src/Lupasos.cpp
-        src/Lupasos.h)
+        src/Lupasos.h
+        src/PocionVida.cpp
+        src/PocionVida.h
+        src/EscudoBendito.cpp
+        src/EscudoBendito.h
+        src/AmuletoFuria.cpp
+        src/AmuletoFuria.h)
