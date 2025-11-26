@@ -1,20 +1,26 @@
 #ifndef PROYECTOFINAL20252_EL_GRAN_TORNEO_DE_LA_ARENA_PROYECTO_MANUELR_LUPIM_ARENA_H
 #define PROYECTOFINAL20252_EL_GRAN_TORNEO_DE_LA_ARENA_PROYECTO_MANUELR_LUPIM_ARENA_H
 
+#include "Guild.h"
 #include <vector>
-
-class Personaje;
+using std::vector;
+using std::string;
 
 class Arena {
-public:
-    void cargarEquipos(const std::vector<Personaje*> &a, const std::vector<Personaje*> &b);
-    void iniciar();
-
 private:
-    std::vector<Personaje*> eq1;
-    std::vector<Personaje*> eq2;
+    Guild* guildJugador;
+    vector<Personaje*> oponentes;
+    int turnoActual;
+    int objetosUsados;
 
-    bool vivos(const std::vector<Personaje*> &v);
+public:
+    Arena(Guild* guild);
+    ~Arena();
+
+    void inicializarOponentes();
+    void iniciarCombate();
+    bool equipoEliminado(const vector<Personaje*>& equipo) const;
+    void mostrarResumen(const string& ganador) const;
 };
 
 

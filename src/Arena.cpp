@@ -1,39 +1,31 @@
-#include "arena.h"
-#include "personaje.h"
+#include "Arena.h"
+#include "Guerrero.h"
+#include "Mago.h"
+#include "Sanador.h"
+#include "Berserker.h"
+#include "Lupasos.h"
 #include <iostream>
+#include <cstdlib>
+#include <ctime>
+using namespace std;
 
-void Arena::cargarEquipos(const std::vector<Personaje*> &a, const std::vector<Personaje*> &b) {
-    eq1 = a;
-    eq2 = b;
+Arena::Arena(Guild* guild) : guildJugador(guild), turnoActual(1), objetosUsados(0) {}
+
+Arena::~Arena() {
+    for (Personaje* oponente : oponentes) {
+        delete oponente;
+    }
 }
 
-bool Arena::vivos(const std::vector<Personaje*> &v) {
-    for (auto p : v) if (p->estaVivo()) return true;
-    return false;
-}
+void Arena::inicializarOponentes() {
+    oponentes.push_back(new Guerrero("Dravos", 5, 100, 22, 12));
+    oponentes.push_back(new Mago("Selene", 5, 70, 28, 6));
+    oponentes.push_back(new Sanador("Theron", 5, 85, 12, 8));
+    oponentes.push_back(new Berserker("Gorak", 5, 105, 26, 11));
+    oponentes.push_back(new Lupasos("Ulric", 5, 95, 20, 12));
 
-void Arena::iniciar() {
-    int turno = 1;
-    while (vivos(eq1) && vivos(eq2)) {
-        for (auto p : eq1) {
-            if (!p->estaVivo()) continue;
-            for (auto r : eq2) {
-                if (r->estaVivo()) {
-                    p->atacar(r);
-                    break;
-                }
-            }
-        }
-        for (auto r : eq2) {
-            if (!r->estaVivo()) continue;
-            for (auto p : eq1) {
-                if (p->estaVivo()) {
-                    r->atacar(p);
-                    break;
-                }
-            }
-        }
-        turno++;
-        if (turno > 200) break;
+    cout << "\n=== Oponentes en la Arena ===" << endl;
+    for (Personaje* oponente : oponentes) {
+        oponente->mostrarInfo();
     }
 }
