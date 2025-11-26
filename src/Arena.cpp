@@ -29,3 +29,71 @@ void Arena::inicializarOponentes() {
         oponente->mostrarInfo();
     }
 }
+
+void Arena::iniciarCombate() {
+    cout << "\n=== COMIENZA EL COMBATE ===" << endl;
+
+    while (true) {
+        cout << "\n========================================" << endl;
+        cout << "--- TURNO " << turnoActual << " ---" << endl;
+        cout << "========================================" << endl;
+
+        // ============= TURNO DE LOS HEROES (JUGADOR) =============
+        vector<Personaje*> heroesVivos = guildJugador->getHeroesVivos();
+
+        for (Personaje* heroe : heroesVivos) {
+            if (!heroe->estaVivo()) continue;
+
+            // Mostrar estado actual
+            cout << "\n>>> Es el turno de: " << heroe->getNombre()
+                 << " (" << heroe->getRol() << ")" << endl;
+            cout << "   Vida: " << heroe->getVida() << " | Ataque: "
+                 << heroe->getAtaque() << " | Defensa: " << heroe->getDefensa() << endl;
+
+            // Mostrar oponentes disponibles
+            cout << "\n--- Oponentes disponibles ---" << endl;
+            vector<Personaje*> oponentesVivos;
+            int index = 1;
+            for (Personaje* op : oponentes) {
+                if (op->estaVivo()) {
+                    cout << index << ". " << op->getNombre() << " (" << op->getRol()
+                         << ") - Vida: " << op->getVida() << endl;
+                    oponentesVivos.push_back(op);
+                    index++;
+                }
+            }
+
+            if (oponentesVivos.empty()) break;
+
+            // Menu de acciones
+            cout << "\n¿Que desea hacer con " << heroe->getNombre() << "?" << endl;
+            cout << "1. Atacar a un enemigo" << endl;
+
+            if (heroe->getRol() == "Sanador") {
+                cout << "2. Curar a un aliado" << endl;
+            }
+
+            // Verificar si el heroe tiene objetos disponibles (simplificado)
+            if (!guildJugador->getInventario().empty()) {
+                cout << "3. Usar objeto magico" << endl;
+            }
+
+            cout << "Opcion: ";
+            int accion;
+            cin >> accion;
+
+            if (accion == 1) {
+                // Atacar
+                cout << "Seleccione el objetivo (1-" << oponentesVivos.size() << "): ";
+                int objetivo;
+                cin >> objetivo;
+
+                if (objetivo >= 1 && objetivo <= oponentesVivos.size()) {
+                    Personaje* objetivoSeleccionado = oponentesVivos[objetivo - 1];
+                    heroe->realizarAccion(objetivoSeleccionado);
+
+                    if (!objetivoSeleccionado->estaVivo()) {
+                        cout << "*** " << objetivoSeleccionado->getNombre()
+                             << " ha sido DERROTADO! ***" << endl;
+                    }
+                } else {
