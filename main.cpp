@@ -105,3 +105,18 @@ int main() {
                 delete arena;
                 break;
             }
+
+            case 6:
+                cout << "Gracias por jugar. Hasta pronto" << endl;
+                break;
+
+
+            default:
+                cout << "Opcion invalida." << endl;
+        }
+
+    } while(opcion != 6);
+
+    delete miGuild;
+    return 0;
+}
