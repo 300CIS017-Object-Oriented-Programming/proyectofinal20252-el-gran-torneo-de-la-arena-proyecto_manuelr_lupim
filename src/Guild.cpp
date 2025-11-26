@@ -102,3 +102,21 @@ void Guild::listarInventario() const {
         obj->mostrarInfo();
     }
 }
+
+vector<Personaje*> Guild::getHeroesVivos() const {
+    vector<Personaje*> vivos;
+    for (const auto& par : heroes) {
+        if (par.second->estaVivo()) {
+            vivos.push_back(par.second);
+        }
+    }
+    return vivos;
+}
+
+vector<ObjetoMagico*>& Guild::getInventario() {
+    return inventario;
+}
+
+string Guild::getNombre() const {
+    return nombreGuild;
+}

@@ -81,3 +81,27 @@ int main() {
             }
 
             case 3: {
+                cout << "Nombre del heroe a eliminar: ";
+                string nombre;
+                getline(cin, nombre);
+                miGuild->eliminarHeroe(nombre);
+                break;
+            }
+
+            case 4:
+                miGuild->listarInventario();
+                break;
+
+            case 5: {
+                vector<Personaje*> heroesVivos = miGuild->getHeroesVivos();
+                if (heroesVivos.empty()) {
+                    cout << "No hay heroes vivos para combatir." << endl;
+                    break;
+                }
+
+                Arena* arena = new Arena(miGuild);
+                arena->inicializarOponentes();
+                arena->iniciarCombate();
+                delete arena;
+                break;
+            }
