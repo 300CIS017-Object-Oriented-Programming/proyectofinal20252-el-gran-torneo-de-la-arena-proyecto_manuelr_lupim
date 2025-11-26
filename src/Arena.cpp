@@ -97,3 +97,54 @@ void Arena::iniciarCombate() {
                              << " ha sido DERROTADO! ***" << endl;
                     }
                 } else {
+                    cout << "Objetivo invalido. Se pierde el turno." << endl;
+                }
+
+            } else if (accion == 2 && heroe->getRol() == "Sanador") {
+                // Curar aliado
+                Sanador* sanador = dynamic_cast<Sanador*>(heroe);
+                if (sanador) {
+                    cout << "\n--- Aliados disponibles ---" << endl;
+                    vector<Personaje*> heroesParaCurar;
+                    int idx = 1;
+                    for (Personaje* h : heroesVivos) {
+                        if (h->estaVivo() && h != heroe) {
+                            cout << idx << ". " << h->getNombre()
+                                 << " - Vida: " << h->getVida() << endl;
+                            heroesParaCurar.push_back(h);
+                            idx++;
+                        }
+                    }
+
+                    if (heroesParaCurar.empty()) {
+                        cout << "No hay aliados para curar. Ataque normal." << endl;
+                        if (!oponentesVivos.empty()) {
+                            heroe->realizarAccion(oponentesVivos[0]);
+                        }
+                    } else {
+                        cout << "Seleccione a quien curar (1-" << heroesParaCurar.size() << "): ";
+                        int aliado;
+                        cin >> aliado;
+
+                        if (aliado >= 1 && aliado <= heroesParaCurar.size()) {
+                            vector<Personaje*> temp;
+                            temp.push_back(heroesParaCurar[aliado - 1]);
+                            sanador->curarAliado(temp);
+                        } else {
+                            cout << "Opcion invalida." << endl;
+                        }
+                    }
+                }
+
+            } else if (accion == 3 && !guildJugador->getInventario().empty()) {
+                // Usar objeto
+                cout << "\n--- Objetos disponibles ---" << endl;
+                vector<ObjetoMagico*>& inventario = guildJugador->getInventario();
+                int idx = 1;
+                for (ObjetoMagico* obj : inventario) {
+                    if (obj->getStock() > 0) {
+                        cout << idx << ". " << obj->getNombre()
+                             << " (Stock: " << obj->getStock() << ")" << endl;
+                        idx++;
+                    }
+                }
