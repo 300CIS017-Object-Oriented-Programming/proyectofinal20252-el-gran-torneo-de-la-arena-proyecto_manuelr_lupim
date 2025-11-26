@@ -4,43 +4,60 @@
 #include <string>
 #include <vector>
 
-#include <string>
-using std::string;
+class ObjetoMagico;
 
 class Personaje {
-protected:
-    string nombre;
-    int nivel;
-    int vida;
-    int vidaMaxima;
-    int ataque;
-    int defensa;
-    string rol;
-
 public:
-    Personaje(string n, int nv, int v, int a, int d, string r);
+    Personaje(int id, const std::string &nombre, int vida, int ataque, const std::string &tipo);
     virtual ~Personaje();
 
-    // Getters
-    string getNombre() const;
-    int getNivel() const;
+    int getId() const;
+    const std::string& getNombre() const;
     int getVida() const;
-    int getAtaque() const;
-    int getDefensa() const;
-    string getRol() const;
     bool estaVivo() const;
 
-    // Setters
-    void setVida(int v);
-    void setAtaque(int a);
-    void setDefensa(int d);
+    virtual void atacar(Personaje *objetivo);
+    virtual void habilidadEspecial(Personaje *objetivo);
 
-    // Metodos virtuales
-    virtual void realizarAccion(Personaje* objetivo) = 0;
-    virtual void mostrarInfo() const;
+    bool agregarObjeto(ObjetoMagico *obj);
+    void usarObjeto(int index, Personaje *objetivo);
 
-    void recibirDanio(int danio);
-    void curar(int cantidad);
+protected:
+    int id;
+    std::string nombre;
+    int vida;
+    int ataque;
+    std::string tipo;
+    std::vector<ObjetoMagico*> objetos;
 };
 
+class Guerrero : public Personaje {
+public:
+    using Personaje::Personaje;
+    void habilidadEspecial(Personaje *objetivo) override;
+};
+
+class Mago : public Personaje {
+public:
+    using Personaje::Personaje;
+    void habilidadEspecial(Personaje *objetivo) override;
+};
+
+class Sanador : public Personaje {
+public:
+    using Personaje::Personaje;
+    void habilidadEspecial(Personaje *objetivo) override;
+};
+
+class MagoOscuro : public Personaje {
+public:
+    using Personaje::Personaje;
+    void habilidadEspecial(Personaje *objetivo) override;
+};
+
+class Tanque : public Personaje {
+public:
+    using Personaje::Personaje;
+    void habilidadEspecial(Personaje *objetivo) override;
+};
 #endif //PROYECTOFINAL20252_EL_GRAN_TORNEO_DE_LA_ARENA_PROYECTO_MANUELR_LUPIM_PERSONAJE_H

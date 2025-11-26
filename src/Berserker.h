@@ -2,7 +2,7 @@
 #define PROYECTOFINAL20252_EL_GRAN_TORNEO_DE_LA_ARENA_PROYECTO_MANUELR_LUPIM_BERSERKER_H
 
 
-class Berserker {
+class Berserker {..
 };
 
 

@@ -1,68 +1,13 @@
-**Primer Diagrama UML**
-```mermaid
+# **BITACORA DEL EQUIPO**
 
-classDiagram
 
-    %% ----------- Clase base -----------
-    class Personaje {
-        - int:id
-        - string:nombre
-        - int:vida
-        - int:ataque
-        - string:tipo   %% "Guerrero", "Mago", etc.
-        + void:atacar(Personaje *objetivo)
-        + bool:estaVivo()
-    }
+| **Fecha** | **Qué se hizo**                            | **Por qué**                                                                      | **Responsable** |
+|-----------|--------------------------------------------|---------------------------------------------------------------------------------------------|-----------------|
+| 13 / nov  | Se agrego la ` Bitacosa.md`                | Organizar la informacion de los trabajos                                                    | Manuel          |
+| 14 / nov  | Se realiza el primer UML                   | Tener el primer bosquejo y guia del codigo que se va a realizar                             | Equipo          |
+| 20 / nov  | Se crea la clase  `Heroe`                  | Clase padre para los personajes como tal                                                    | Equipo          |
+| 26/nov    | Implementar roles Guerrero, Mago y Sanador | El proyecto lo exige y permite usar polimorfismo en `actuar()`                              | Lupi            |
+| 26/nov    | Creacion de la bitacora ya mas organizada  | Nos dejamos llevar por el codigo, y se nos estaba olvidando llevar un registro correctamente | Lupi            |
 
-    %% ----------- Herencia simple -----------
-    Personaje <|-- Guerrero
-    Personaje <|-- Mago
-    Personaje <|-- Sanador
 
-    class Guerrero {
-        + void::habilidadEspecial()
-    }
-
-    class Mago {
-        + void::habilidadEspecial()
-    }
-
-    class Sanador {
-        + void::habilidadEspecial()
-    }
-
-    %% ----------- Objeto Mágico -----------
-    class ObjetoMagico {
-        - string:nombre
-        - int:usos
-        + void:usar(Personaje *objetivo)
-    }
-
-    %% ----------- Inventario Global -----------
-    class Inventario {
-        - unordered_map<string,int>::stock
-        + void:agregarTipo(string nombre,int cantidad)
-        + bool:asignar(Personaje *p,string tipo)
-        + void:mostrar()
-    }
-
-    %% ----------- Guild del jugador -----------
-    class Guild {
-        - vector<Personaje*> : heroes
-        + void:agregar(Personaje *p)
-        + void:listar()
-    }
-
-    %% ----------- Arena (Combate) -----------
-    class Arena {
-        - vector<Personaje*>:equipoJugador
-        - vector<Personaje*>:equipoRival
-        + void::iniciar()
-    }
-
-    %% ----------- Relaciones -----------
-    Guild "1" o -- "*" Personaje
-    Inventario "1" -- "*" ObjetoMagico
-    Personaje "0..2" o-- ObjetoMagico
-    Arena "1" ..> Personaje
-```
+Se resalta, que muchos commits se realizaron por parte de manuel, ya que mi portatil presentaba unos fallos en la compilacion, y Clion no me funcionaba correctamente en el dispositivo, asi que se trabajo mutuamente en el mismo dispositivo.
