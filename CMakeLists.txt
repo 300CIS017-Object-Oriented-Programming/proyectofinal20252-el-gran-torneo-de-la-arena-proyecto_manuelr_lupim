@@ -33,4 +33,5 @@ add_executable(proyectofinal20252_el_gran_torneo_de_la_arena_proyecto_manuelr_lu
         src/DanioElectrico.cpp
         src/DanioElectrico.h
         src/Tornado.cpp
-        src/Tornado.h)
+        src/Tornado.h
+        src/json.hpp)

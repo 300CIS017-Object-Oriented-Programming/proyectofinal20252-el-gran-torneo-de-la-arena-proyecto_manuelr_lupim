@@ -58,6 +58,7 @@ void Guild::agregarHeroe(Personaje* heroe) {
     }
 }
 
+//VER QUE ES
 void Guild::eliminarHeroe(string nombre) {
     auto it = heroes.find(nombre);
     if (it != heroes.end()) {
