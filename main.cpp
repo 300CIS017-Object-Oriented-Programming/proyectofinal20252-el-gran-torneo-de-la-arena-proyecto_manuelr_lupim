@@ -106,7 +106,25 @@ int main() {
                 break;
             }
 
-            case 6:
+            case 6: {
+                cout << "Nombre de archivo para guardar (ej: heroes.json): ";
+                string fname;
+                getline(cin, fname);
+                if (fname.empty()) fname = "heroes.json";
+                miGuild->guardarHeroesJSON(fname);
+                break;
+            }
+
+            case 7: {
+                cout << "Nombre de archivo JSON a cargar (ej: heroes.json): ";
+                string fname;
+                getline(cin, fname);
+                if (fname.empty()) fname = "heroes.json";
+                miGuild->cargarHeroesDesdeJSON(fname);
+                break;
+            }
+
+            case 8:
                 cout << "Gracias por jugar. Hasta pronto" << endl;
                 break;
 
@@ -115,7 +133,7 @@ int main() {
                 cout << "Opcion invalida." << endl;
         }
 
-    } while(opcion != 6);
+    } while(opcion != 8);
 
     delete miGuild;
     return 0;

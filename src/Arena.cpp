@@ -68,7 +68,7 @@ void Arena::iniciarCombate() {
             if (oponentesVivos.empty()) break;
 
             // Menu de acciones
-            cout << "\n¿Que desea hacer con " << heroe->getNombre() << "?" << endl;
+            cout << "\nQue desea hacer con " << heroe->getNombre() << "?" << endl;
             cout << "1. Atacar a un enemigo" << endl;
 
             if (heroe->getRol() == "Sanador") {
