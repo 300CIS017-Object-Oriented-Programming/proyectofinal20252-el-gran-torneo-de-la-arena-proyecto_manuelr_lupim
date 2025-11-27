@@ -7,7 +7,9 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
-using namespace std;
+using std::cin;
+using std::cout;
+using std::endl;
 
 Arena::Arena(Guild* guild) : guildJugador(guild), turnoActual(1), objetosUsados(0) {}
 
