@@ -1,5 +1,4 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/Wv2uUvIt)
-# proyecto_paradaise
+# Proyecto Final - Torneo de Rol
 Proyecto curso programación orientada a objetos.
 
 **Primer Diagrama UML**

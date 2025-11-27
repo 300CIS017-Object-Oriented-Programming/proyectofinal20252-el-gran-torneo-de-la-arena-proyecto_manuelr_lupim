@@ -9,13 +9,13 @@ DagaSombria::DagaSombria(int stock)
 }
 
 void DagaSombria::usar(Personaje* objetivo) {
-    int dano = 50;
+    int danio = 50;
 
     cout << "La Daga Sombria atraviesa toda defensa de "
          << objetivo->getNombre() << "!" << endl;
 
-    objetivo->recibirDanioDirecto(dano);
+    objetivo->recibirDanioDirecto(danio);
 
     cout << objetivo->getNombre()
-         << " recibe " << dano << " puntos de dano directo." << endl;
+         << " recibe " << danio << " puntos de dano directo." << endl;
 }
