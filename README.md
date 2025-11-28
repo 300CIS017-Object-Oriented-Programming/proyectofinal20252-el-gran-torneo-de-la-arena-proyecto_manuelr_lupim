@@ -207,7 +207,7 @@ classDiagram
         - vector<Personaje*> : heroes
         + void:agregar(Personaje *p)
         + void:listar()
-    } 
+    }
 
     %% ----------- Arena (Combate) -----------
     class Arena {
@@ -217,109 +217,19 @@ classDiagram
     }
 
     %% ----------- Relaciones -----------
-    Guild "1" o-- "*" Personaje
+    Guild "1" o -- "*" Personaje
     Inventario "1" -- "*" ObjetoMagico
     Personaje "0..2" o-- ObjetoMagico
     Arena "1" ..> Personaje
 ```
 
 
+
 ### UML 2 — (placeholder) Inventario / Objetos
 
-**Segundo Diagrama UML**
-```mermaid
+> *Aquí iría un diagrama más detallado mostrando `Categoria`/`Prototipo`, clonación, y flujo de stock.*
+> Ejemplo: `Inventario` → `Prototipo (ObjetoMagico*)` → clones entregados a `Heroe`.
 
-classDiagram
-    
-    %% =======================
-    %%       PERSONAJE
-    %% =======================
-
-    class Personaje {
-        - int id
-        - string nombre
-        - int vida
-        - int ataque
-        - string tipo
-        + void atacar(Personaje *objetivo)
-        + bool estaVivo()
-    }
-
-    %% Herencias
-    Personaje <|-- Guerrero
-    Personaje <|-- Mago
-    Personaje <|-- Sanador
-    Personaje <|-- Berserker
-    Personaje <|-- Lupassos
-
-    class Guerrero {
-        + void habilidadEspecial()
-    }
-
-    class Mago {
-        + void habilidadEspecial()
-    }
-
-    class Sanador {
-        + void habilidadEspecial()
-    }
-
-    class Berserker {
-        + void habilidadEspecial()
-    }
-
-    class Lupassos {
-        + void habilidadEspecial()
-    }
-
-    %% =======================
-    %%   OBJETO MAGICO BASE
-    %% =======================
-
-    class ObjetoMagico {
-        - string nombre
-        - int usos
-        + void usar(Personaje *objetivo)
-    }
-
-    %% Herencias de objetos mágicos
-    ObjetoMagico <|-- PocionVida
-    ObjetoMagico <|-- AmuletoFuria
-    ObjetoMagico <|-- EscudoBendito
-    ObjetoMagico <|-- DagaSombria
-    ObjetoMagico <|-- Tornado
-    ObjetoMagico <|-- DanoElectrico
-
-    class PocionVida {
-        + usar(Personaje *objetivo)
-    }
-
-    class AmuletoFuria {
-        + usar(Personaje *objetivo)
-    }
-
-    class EscudoBendito {
-        + usar(Personaje *objetivo)
-    }
-
-    class DagaSombria {
-        + usar(Personaje *objetivo)
-    }
-
-    class Tornado {
-        + usar(Personaje *objetivo)
-    }
-
-    class DanoElectrico {
-        + usar(Personaje *objetivo)
-    }
-
-    %% Relación general:
-    Personaje "0..2" o-- "1" ObjetoMagico
-    
-
-
- 
 ### UML 3 — (placeholder) Secuencia de combate
 
 > *Diagrama de secuencia con: Usuario -> Arena : iniciarCombate, Arena -> Heroe : pedirAccion, Heroe -> Oponente : atacar(), Oponente -> Heroe : recibirDanio()*.
