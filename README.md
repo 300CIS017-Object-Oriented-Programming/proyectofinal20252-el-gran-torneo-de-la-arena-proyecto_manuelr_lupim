@@ -1,4 +1,5 @@
 
+
 # README — El gran torneo de la arena
 
 ---
@@ -225,26 +226,209 @@ classDiagram
 
 
 
-### UML 2 — (placeholder) Inventario / Objetos
+### UML 2 Con mejoras y mas detalles
 
-> *Aquí iría un diagrama más detallado mostrando `Categoria`/`Prototipo`, clonación, y flujo de stock.*
-> Ejemplo: `Inventario` → `Prototipo (ObjetoMagico*)` → clones entregados a `Heroe`.
+```mermaid
 
-### UML 3 — (placeholder) Secuencia de combate
+classDiagram
+    
+    %% =======================
+    %%       PERSONAJE
+    %% =======================
 
-> *Diagrama de secuencia con: Usuario -> Arena : iniciarCombate, Arena -> Heroe : pedirAccion, Heroe -> Oponente : atacar(), Oponente -> Heroe : recibirDanio()*.
+    class Personaje {
+        - int id
+        - string nombre
+        - int vida
+        - int ataque
+        - string tipo
+        + void atacar(Personaje *objetivo)
+        + bool estaVivo()
+    }
 
-> **Cómo evolucionar los UMLs:**
->
-> * **UML 1 (clases básicas)** ya está; cuando añadas nuevas responsabilidades (persistencia completa, sistema de efectos con duración) amplía `Arena` y `ObjetoMagico` con nuevas operaciones.
-> * **UML 2 (inventario)**: modela `Categoria { prototipo, stock }` y métodos `crear`, `asignar`, `retirar`.
-> * **UML 3 (secuencia)**: agrega mensajes para usar objetos, marcar `usado=true`, y llamadas a `Persistencia`.
+    %% Herencias
+    Personaje <|-- Guerrero
+    Personaje <|-- Mago
+    Personaje <|-- Sanador
+    Personaje <|-- Berserker
+    Personaje <|-- Lupassos
 
----
+    class Guerrero {
+        + void habilidadEspecial()
+    }
+
+    class Mago {
+        + void habilidadEspecial()
+    }
+
+    class Sanador {
+        + void habilidadEspecial()
+    }
+
+    class Berserker {
+        + void habilidadEspecial()
+    }
+
+    class Lupassos {
+        + void habilidadEspecial()
+    }
+
+    %% =======================
+    %%   OBJETO MAGICO BASE
+    %% =======================
+
+    class ObjetoMagico {
+        - string nombre
+        - int usos
+        + void usar(Personaje *objetivo)
+    }
+
+    %% Herencias de objetos mágicos
+    ObjetoMagico <|-- PocionVida
+    ObjetoMagico <|-- AmuletoFuria
+    ObjetoMagico <|-- EscudoBendito
+    ObjetoMagico <|-- DagaSombria
+    ObjetoMagico <|-- Tornado
+    ObjetoMagico <|-- DanoElectrico
+
+    class PocionVida {
+        + usar(Personaje *objetivo)
+    }
+
+    class AmuletoFuria {
+        + usar(Personaje *objetivo)
+    }
+
+    class EscudoBendito {
+        + usar(Personaje *objetivo)
+    }
+
+    class DagaSombria {
+        + usar(Personaje *objetivo)
+    }
+
+    class Tornado {
+        + usar(Personaje *objetivo)
+    }
+
+    class DanoElectrico {
+        + usar(Personaje *objetivo)
+    }
+
+    %% Relación general:
+    Personaje "0..2" o-- "1" ObjetoMagico
+    
+```
+
+
+
+### UML 3 y final
+
+```mermaid
+
+classDiagram
+
+%% =========================
+%% CLASE BASE: PERSONAJE
+%% =========================
+class Personaje {
+- int id
+- string nombre
+- int vida
+- int ataque
+- string tipo
++ void atacar(Personaje* objetivo)
++ bool estaVivo()
+}
+
+%% =========================
+%% SUBCLASES DE PERSONAJE
+%% =========================
+Personaje <|-- Guerrero
+Personaje <|-- Mago
+Personaje <|-- Sanador
+Personaje <|-- Berserker
+Personaje <|-- Lupassos
+
+class Guerrero {
++ void habilidadEspecial()
+}
+
+class Mago {
++ void habilidadEspecial()
+}
+
+class Sanador {
++ void habilidadEspecial()
+}
+
+class Berserker {
++ void habilidadEspecial()
+}
+
+class Lupassos {
++ void habilidadEspecial()
+}
+
+%% =========================
+%% OBJETO MAGICO
+%% =========================
+class ObjetoMagico {
+- string nombre
+- int usos
++ void usar(Personaje* objetivo)
+}
+
+%% Subclases de ObjetoMagico
+ObjetoMagico <|-- PocionVida
+ObjetoMagico <|-- AmuletoFuria
+ObjetoMagico <|-- EscudoBendito
+ObjetoMagico <|-- DagaSombria
+ObjetoMagico <|-- Tornado
+ObjetoMagico <|-- DanoElectrico
+
+class PocionVida
+class AmuletoFuria
+class EscudoBendito
+class DagaSombria
+class Tornado
+class DanoElectrico
+
+%% =========================
+%% GUILD
+%% =========================
+class Guild {
+- vector<Personaje*> heroes
++ void agregar(Personaje* p)
++ void listar()
+}
+
+Guild "1" o-- "*" Personaje
+
+%% =========================
+%% ARENA
+%% =========================
+class Arena {
+- vector<Personaje*> equipoJugador
+- vector<Personaje*> equipoRival
+- int ronda
++ void prepararPelea()
++ void iniciarCombate()
++ void turnoHeroes()
++ void turnoEnemigos()
++ void aplicarObjetos()
++ void mostrarEstado()
+}
+
+Arena "1" o-- "*" Personaje : equipoJugador
+Arena "1" o-- "*" Personaje : equipoRival
+
+%% Cada personaje puede tener 0..2 objetos mágicos equipados
+Personaje "1" o-- "0..2" ObjetoMagico
+
+```
 
 ## 9) Imágenes y evidencia (qué capturar y cómo explicarlo)
-
-Cuando generes las imágenes/screenshots para incluir en el README o la carpeta `/docs`, toma las siguientes capturas y añade una breve explicación junto a cada una:
 
 1. **Estructura de archivos del proyecto** (`explorer` o VSCode mostrando `/src`)
 
