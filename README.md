@@ -109,8 +109,8 @@ Objetos usados: 3
 
 * **Antes del combate (preparacion):**
 
-    * El jugador puede asignar o retirar objetos a sus héroes.
-    * Asignar decrementa stock global; retirar devuelve stock si el objeto NO fue usado.
+    * El jugador puede asignar o retirar objetos a sus héroes desde el inventario.
+    * El asignar disminuye el stock global; retirar devuelve stock si el objeto NO fue usado durante el combate.
     * Máximo 2 objetos por héroe (ejemplo en la implementación).
 * **Durante el combate:**
 
@@ -133,7 +133,7 @@ Objetos usados: 3
 
 ## 6) Arena / Combate (lógica general)
 
-* Combate por turnos: **turno heroes** → acciones del jugador para cada héroe vivo; luego **turno enemigos** → IA simple ataca.
+* Combate por turnos: **turno heroes** → acciones del jugador para cada héroe vivo; luego **turno enemigos** → La computadora simplemente ataca.
 * Factores aleatorios: variación de daño ±10%, probabilidad de crítico o fallo, efectos aleatorios en objetos.
 * Un personaje muere cuando `vida <= 0`.
 * Se chequea el fin del combate al terminar cada turno completo.
@@ -146,11 +146,11 @@ Objetos usados: 3
 * Se guarda un listado básico de héroes (id, nombre, nivel, vida, ataque, defensa, rol, tipo) en `heroes_guardados.json` usando `json.hpp` (nlohmann::json).
 * `PersistenciaHeroesJSON::guardar(guild, ruta)` y `::cargar(guild, ruta)` realizan respectivamente la escritura y la reconstrucción simple de la guild (reconstruye classes por `tipo`).
 
-> Nota: por simplicidad solo se persisten los héroes (no todo el estado del inventario ni el estado de objetos asignados). Si quieres persistir inventario/objetos asignados, hay que serializar también `Inventario` y las instancias de objetos (recomendado como mejora).
+> Nota: Profe se decidio por simplicidad y falta de conocimiento que solo se persisten los héroes (no todo el estado del inventario ni el estado de objetos asignados).
 
 ---
 
-## 8) UMLs — plantillas y dónde ampliar
+## 8) UMLs
 
 ### UML 1 — Diagrama de clases inicial (básico)
 
@@ -162,13 +162,14 @@ classDiagram
 
     %% ----------- Clase base -----------
     class Personaje {
-        - int:id
-        - string:nombre
-        - int:vida
-        - int:ataque
-        - string:tipo   %% "Guerrero", "Mago", etc.
-        + void:atacar(Personaje *objetivo)
-        + bool:estaVivo()
+        - int: id
+        - string: nombre
+        - int: vida
+        - int: ataque
+        - int: defensa
+        
+        + void: atacar(Personaje *objetivo)
+        + bool: estaVivo()
     }
 
     %% ----------- Herencia simple -----------
@@ -190,8 +191,8 @@ classDiagram
 
     %% ----------- Objeto Magico -----------
     class ObjetoMagico {
-        - string:nombre
-        - int:usos
+        - string: nombre
+        - int: usos
         + void:usar(Personaje *objetivo)
     }
 
@@ -210,18 +211,11 @@ classDiagram
         + void:listar()
     }
 
-    %% ----------- Arena (Combate) -----------
-    class Arena {
-        - vector<Personaje*>:equipoJugador
-        - vector<Personaje*>:equipoRival
-        + void::iniciar()
-    }
-
     %% ----------- Relaciones -----------
     Guild "1" o -- "*" Personaje
     Inventario "1" -- "*" ObjetoMagico
     Personaje "0..2" o-- ObjetoMagico
-    Arena "1" ..> Personaje
+
 ```
 
 
@@ -229,95 +223,66 @@ classDiagram
 ### UML 2 Con mejoras y mas detalles
 
 ```mermaid
-
 classDiagram
-    
-    %% =======================
-    %%       PERSONAJE
-    %% =======================
+%% ========= UML 2: Version Ajustada (Heroes + Objetos) =========
 
     class Personaje {
-        - int id
-        - string nombre
-        - int vida
-        - int ataque
-        - string tipo
-        + void atacar(Personaje *objetivo)
-        + bool estaVivo()
+        - int:id
+        - string:nombre
+        - int:vida
+        - int:ataque
+        - int:defensa
+        - vector~ObjetoMagico*~:objetos
+        + bool:estaVivo()
+        + recibirDanio(int)
+        + asignarObjeto(ObjetoMagico*)
+        + usarObjeto(int)
+        + habilidadEspecial()
     }
 
-    %% Herencias
     Personaje <|-- Guerrero
     Personaje <|-- Mago
     Personaje <|-- Sanador
     Personaje <|-- Berserker
-    Personaje <|-- Lupassos
-
-    class Guerrero {
-        + void habilidadEspecial()
-    }
-
-    class Mago {
-        + void habilidadEspecial()
-    }
-
-    class Sanador {
-        + void habilidadEspecial()
-    }
-
-    class Berserker {
-        + void habilidadEspecial()
-    }
-
-    class Lupassos {
-        + void habilidadEspecial()
-    }
-
-    %% =======================
-    %%   OBJETO MAGICO BASE
-    %% =======================
+    Personaje <|-- Lupasos
 
     class ObjetoMagico {
-        - string nombre
-        - int usos
-        + void usar(Personaje *objetivo)
+        - string:nombre
+        - int:usos
+        + aplicar(Personaje*)
+        + clonar(): ObjetoMagico*
     }
 
-    %% Herencias de objetos mágicos
     ObjetoMagico <|-- PocionVida
     ObjetoMagico <|-- AmuletoFuria
     ObjetoMagico <|-- EscudoBendito
     ObjetoMagico <|-- DagaSombria
+    ObjetoMagico <|-- DanioElectrico
     ObjetoMagico <|-- Tornado
-    ObjetoMagico <|-- DanoElectrico
 
-    class PocionVida {
-        + usar(Personaje *objetivo)
+    class Categoria {
+        - ObjetoMagico*:prototipo
+        - int:stock
     }
 
-    class AmuletoFuria {
-        + usar(Personaje *objetivo)
+    class Inventario {
+        - unordered_map~string,Categoria~:categorias
+        + crearCategoria(string,ObjetoMagico*,int)
+        + asignar(Personaje*,string)
+        + listarCategorias()
     }
 
-    class EscudoBendito {
-        + usar(Personaje *objetivo)
+    class Guild {
+        - unordered_map~int,Personaje*~:heroes
+        + listarHeroes()
+        + obtenerHeroe(int)
     }
 
-    class DagaSombria {
-        + usar(Personaje *objetivo)
-    }
+Guild "1" o-- "*" Personaje
+Categoria --> ObjetoMagico : prototipo
+Inventario "1" o-- "*" Categoria
+Personaje "0..2" o-- ObjetoMagico
 
-    class Tornado {
-        + usar(Personaje *objetivo)
-    }
-
-    class DanoElectrico {
-        + usar(Personaje *objetivo)
-    }
-
-    %% Relación general:
-    Personaje "0..2" o-- "1" ObjetoMagico
-    
 ```
 
 
@@ -325,106 +290,90 @@ classDiagram
 ### UML 3 y final
 
 ```mermaid
-
 classDiagram
+%% ========= UML 3: Version FINAL (Juego completo) =========
 
-%% =========================
-%% CLASE BASE: PERSONAJE
-%% =========================
-class Personaje {
-- int id
-- string nombre
-- int vida
-- int ataque
-- string tipo
-+ void atacar(Personaje* objetivo)
-+ bool estaVivo()
-}
+    class Personaje {
+        - int:id
+        - string:nombre
+        - int:vida
+        - int:ataque
+        - int:defensa
+        - vector~ObjetoMagico*~:objetos
+        + bool:estaVivo()
+        + recibirDanio(int)
+        + asignarObjeto(ObjetoMagico*)
+        + usarObjeto(int)
+        + habilidadEspecial()
+    }
 
-%% =========================
-%% SUBCLASES DE PERSONAJE
-%% =========================
-Personaje <|-- Guerrero
-Personaje <|-- Mago
-Personaje <|-- Sanador
-Personaje <|-- Berserker
-Personaje <|-- Lupassos
+    Personaje <|-- Guerrero
+    Personaje <|-- Mago
+    Personaje <|-- Sanador
+    Personaje <|-- Berserker
+    Personaje <|-- Lupasos
 
-class Guerrero {
-+ void habilidadEspecial()
-}
+    class ObjetoMagico {
+        - string:nombre
+        - int:usos
+        + aplicar(Personaje*,Personaje*)
+        + clonar(): ObjetoMagico*
+    }
 
-class Mago {
-+ void habilidadEspecial()
-}
+    ObjetoMagico <|-- PocionVida
+    ObjetoMagico <|-- AmuletoFuria
+    ObjetoMagico <|-- EscudoBendito
+    ObjetoMagico <|-- DagaSombria
+    ObjetoMagico <|-- DanioElectrico
+    ObjetoMagico <|-- Tornado
 
-class Sanador {
-+ void habilidadEspecial()
-}
+    class Categoria {
+        - ObjetoMagico*:prototipo
+        - int:stock
+    }
 
-class Berserker {
-+ void habilidadEspecial()
-}
+    class Inventario {
+        - unordered_map~string,Categoria~:categorias
+        + crearCategoria(string,ObjetoMagico*,int)
+        + asignar(Personaje*,string)
+        + listarCategorias()
+    }
 
-class Lupassos {
-+ void habilidadEspecial()
-}
+    class Guild {
+        - unordered_map~int,Personaje*~:heroes
+        - unordered_map~int,Personaje*~:enemigos
+        + listarHeroes()
+        + listarEnemigos()
+        + obtenerHeroe(int)
+        + obtenerEnemigo(int)
+    }
 
-%% =========================
-%% OBJETO MAGICO
-%% =========================
-class ObjetoMagico {
-- string nombre
-- int usos
-+ void usar(Personaje* objetivo)
-}
+    class Arena {
+        - int:turno
+        - vector~Personaje*~:heroes
+        - vector~Personaje*~:enemigos
+        - vector~string~:registro
+        + iniciarCombate()
+        + turnoHeroes()
+        + turnoEnemigos()
+        + registrar(string)
+        + mostrarRegistro()
+        + combateTerminado(): bool
+    }
 
-%% Subclases de ObjetoMagico
-ObjetoMagico <|-- PocionVida
-ObjetoMagico <|-- AmuletoFuria
-ObjetoMagico <|-- EscudoBendito
-ObjetoMagico <|-- DagaSombria
-ObjetoMagico <|-- Tornado
-ObjetoMagico <|-- DanoElectrico
+    class PersistenciaHeroesJSON {
+        + guardar(Guild,string)
+        + cargar(Guild,string)
+    }
 
-class PocionVida
-class AmuletoFuria
-class EscudoBendito
-class DagaSombria
-class Tornado
-class DanoElectrico
-
-%% =========================
-%% GUILD
-%% =========================
-class Guild {
-- vector<Personaje*> heroes
-+ void agregar(Personaje* p)
-+ void listar()
-}
-
-Guild "1" o-- "*" Personaje
-
-%% =========================
-%% ARENA
-%% =========================
-class Arena {
-- vector<Personaje*> equipoJugador
-- vector<Personaje*> equipoRival
-- int ronda
-+ void prepararPelea()
-+ void iniciarCombate()
-+ void turnoHeroes()
-+ void turnoEnemigos()
-+ void aplicarObjetos()
-+ void mostrarEstado()
-}
-
-Arena "1" o-- "*" Personaje : equipoJugador
-Arena "1" o-- "*" Personaje : equipoRival
-
-%% Cada personaje puede tener 0..2 objetos mágicos equipados
-Personaje "1" o-- "0..2" ObjetoMagico
+Guild "1" o-- "*" Personaje : heroes
+Guild "1" o.. "*" Personaje : enemigos
+Inventario "1" o-- "*" Categoria
+Categoria --> ObjetoMagico : prototipo
+Personaje "0..X" o-- ObjetoMagico : posee
+Arena --> Guild : usa
+Arena --> Personaje : controla
+PersistenciaHeroesJSON --> Guild
 
 ```
 
@@ -471,17 +420,3 @@ Para cada imagen:
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-# proyecto_paradaise
-Proyecto curso programación orientada a objetos.
