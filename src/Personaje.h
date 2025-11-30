@@ -1,12 +1,12 @@
 #ifndef PROYECTOFINAL20252_EL_GRAN_TORNEO_DE_LA_ARENA_PROYECTO_MANUELR_LUPIM_PERSONAJE_H
 #define PROYECTOFINAL20252_EL_GRAN_TORNEO_DE_LA_ARENA_PROYECTO_MANUELR_LUPIM_PERSONAJE_H
 
-#include <string>
+#include <string> //Libreria para no tener que escribir std::string to.do el rato
 using std::string;
 
 
 class Personaje {
-protected:
+protected:          //protected para que solo las clases hijas puedan acceder
     string nombre;
     int nivel;
     int vida;
