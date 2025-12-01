@@ -20,18 +20,19 @@ void Guerrero::realizarAccion(Personaje* objetivo) {       //dos cosas, revisa s
     }
 
     int danio = ataque;
-    bool critico = (rand() % 100) < (probabilidadCritico * 100);
+    bool critico = (rand() % 100) < (probabilidadCritico * 100); //como una rueda al azar, genera el numero y si es menor que la probabilidad ahi si activa el daño critico
 
     if (critico) {
         danio *= 2;
         cout << nombre << " realiza un GOLPE CRITICO" << endl;
     }
 
-    cout << nombre << " ataca a " << objetivo->getNombre()
+    cout << nombre << " ataca a " << objetivo->getNombre()    // aqui imprime quién ataca, a quién y cuánto daño hará.
          << " con su espada. Dano: " << danio << endl;
 
-    objetivo->recibirDanio(danio);
+    objetivo->recibirDanio(danio);                          //Le hace daño, aplica defensa Y actualiza vida
 
     cout << objetivo->getNombre() << " tiene "
-         << objetivo->getVida() << " puntos de vida." << endl;
+         << objetivo->getVida() << " puntos de vida." << endl;    // Da retroalimentación inmediata del estado tras recibir el golpe.
+
 }

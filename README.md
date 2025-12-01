@@ -260,10 +260,6 @@ classDiagram
     ObjetoMagico <|-- DanioElectrico
     ObjetoMagico <|-- Tornado
 
-    class Categoria {
-        - ObjetoMagico*:prototipo
-        - int:stock
-    }
 
     class Inventario {
         - unordered_map~string,Categoria~:categorias
@@ -279,8 +275,7 @@ classDiagram
     }
 
 Guild "1" o-- "*" Personaje
-Categoria --> ObjetoMagico : prototipo
-Inventario "1" o-- "*" Categoria
+Inventario "1" o-- "*" ObjetoMagico
 Personaje "0..2" o-- ObjetoMagico
 
 ```
@@ -327,10 +322,8 @@ classDiagram
     ObjetoMagico <|-- DanioElectrico
     ObjetoMagico <|-- Tornado
 
-    class Categoria {
-        - ObjetoMagico*:prototipo
-        - int:stock
-    }
+
+
 
     class Inventario {
         - unordered_map~string,Categoria~:categorias
@@ -368,8 +361,7 @@ classDiagram
 
 Guild "1" o-- "*" Personaje : heroes
 Guild "1" o.. "*" Personaje : enemigos
-Inventario "1" o-- "*" Categoria
-Categoria --> ObjetoMagico : prototipo
+Inventario --> ObjetoMagico
 Personaje "0..X" o-- ObjetoMagico : posee
 Arena --> Guild : usa
 Arena --> Personaje : controla

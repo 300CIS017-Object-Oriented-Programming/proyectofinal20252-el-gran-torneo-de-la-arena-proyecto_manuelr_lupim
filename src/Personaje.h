@@ -34,7 +34,11 @@ public:
     void setDefensa(int d);
 
     // Metodos virtuales
-    virtual void realizarAccion(Personaje* objetivo) = 0; // Obliga a cada hijo a implementar su propia forma de atacar o actuar.
+    virtual void realizarAccion(Personaje* objetivo) = 0; // Obliga a cada hijo a implementar su propia forma de atacar o actuar,
+                                                        //VIRTUAL ya que no va a realizar nada, solo sirve para incializar
+
+
+
     virtual void mostrarInfo() const; //ps muestra la info que se le pida de x personaje
 
     void recibirDanio(int danio); // le va quitando "vida" al personaje

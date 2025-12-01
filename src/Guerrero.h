@@ -10,7 +10,7 @@ private:
 
 public:
     Guerrero(string n, int nv, int v, int a, int d);
-    void realizarAccion(Personaje* objetivo) override;
+    void realizarAccion(Personaje* objetivo) override;  //"OVERRIDE" para saber que va a cambiar, aunque hacen cosas parecidas
 };
 
 
