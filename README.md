@@ -377,46 +377,45 @@ PersistenciaHeroesJSON --> Guild
 
 ```
 
-## 9) Imágenes y evidencia (qué capturar y cómo explicarlo)
+## 9) Imágenes y evidencia 
 
-1. **Estructura de archivos del proyecto** (`explorer` o VSCode mostrando `/src`)
+1. **Estructura de archivos del proyecto**
 
     * *Explicación:* muestra la organización del código por responsabilidades (clases, inventario, arena, persistencia).
+![img_1.png](img_1.png)
+ ![img_3.png](img_3.png)
 
 2. **Pantalla del menú principal al ejecutar**
 
-    * *Explicación:* indica opciones disponibles y flujo de interacción.
+    * *Explicación:* indica opciones disponibles.
+![img.png](img.png)
 
 3. **Asignación de objetos en pre-combate**
 
-    * *Explicación:* muestra cómo disminuye stock al asignar y cómo se ve el objeto en el heroe.
-
+    * *Explicación:* muestra cómo disminuye stock al asignar y cómo se puede seleccionar el objeto en el heroe.
+![img_2.png](img_2.png)
+![img_4.png](img_4.png)
+![img_5.png](img_5.png)
 4. **Combate — Turno de héroe mostrando opciones**
 
     * *Explicación:* evidencia interactividad (atacar, usar objeto, habilidad).
-
+![img_6.png](img_6.png)
 5. **Combate — Turno enemigo con golpe crítico / fallo**
 
-    * *Explicación:* demuestra aleatoriedad y mensajes de daño.
-
+    * *Explicación:* se mira como afecta la defensa en el combate.
+![img_7.png](img_7.png)
 6. **Resumen final del combate**
+    * *Explicación:* ganador, supervivientes, turnos, objetos usados, en este caso el jugador perdio.
+![img_8.png](img_8.png)
 
-    * *Explicación:* ganador, supervivientes, turnos, objetos usados.
 
 7. **Archivo JSON guardado (`heroes_guardados.json`)**
-
-    * *Explicación:* demuestra persistencia y formato de los datos.
-
-8. **Ejecución de una prueba de error corregida** (por ejemplo: mostrar `Guild.h` ahora encontrado tras arreglar CMake)
-
-    * *Explicación:* evidencia las correcciones y la robustez del build.
-
-Para cada imagen:
-
-* Incluye el nombre del archivo (ej. `01_menu_principal.png`)
-* Añade 2–3 líneas que expliquen **qué** se ve y **por qué** es relevante.
-
----
+    * *Explicación:* demuestra persistencia y formato de los datos, como se puede guardar y cargar los heroes.
+![img_9.png](img_9.png)
+![img_10.png](img_10.png)
+![img_11.png](img_11.png)
+    
+      
 
 
 
