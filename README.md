@@ -383,15 +383,12 @@ PersistenciaHeroesJSON --> Guild
 
     * *Explicación:* muestra la organización del código por responsabilidades (clases, inventario, arena, persistencia).
 ![img_1.png](img_1.png)
-![img_3.png](img_3.png)
-
+ ![img_3.png](img_3.png)
 
 2. **Pantalla del menú principal al ejecutar**
 
-   * *Explicación:* indica opciones disponibles.
-
+    * *Explicación:* indica opciones disponibles.
 ![img.png](img.png)
-
 
 3. **Asignación de objetos en pre-combate**
 
@@ -399,21 +396,16 @@ PersistenciaHeroesJSON --> Guild
 ![img_2.png](img_2.png)
 ![img_4.png](img_4.png)
 ![img_5.png](img_5.png)
-
-
 4. **Combate — Turno de héroe mostrando opciones**
 
-* *Explicación:* evidencia interactividad (atacar, usar objeto, habilidad).
-
+    * *Explicación:* evidencia interactividad (atacar, usar objeto, habilidad).
 ![img_6.png](img_6.png)
-
 5. **Combate — Turno enemigo con golpe crítico / fallo**
 
-* *Explicación:* se mira como afecta la defensa en el combate.
+    * *Explicación:* se mira como afecta la defensa en el combate.
 ![img_7.png](img_7.png)
-
 6. **Resumen final del combate**
-* *Explicación:* ganador, supervivientes, turnos, objetos usados, en este caso el jugador perdio.
+    * *Explicación:* ganador, supervivientes, turnos, objetos usados, en este caso el jugador perdio.
 ![img_8.png](img_8.png)
 
 

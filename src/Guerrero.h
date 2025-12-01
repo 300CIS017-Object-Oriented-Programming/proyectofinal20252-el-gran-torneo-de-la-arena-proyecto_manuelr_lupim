@@ -3,9 +3,10 @@
 
 #include "Personaje.h"
 
+//hereda to.do de personaje MENOS el nuevo metodo
 class Guerrero : public Personaje {
 private:
-    float probabilidadCritico;
+    float probabilidadCritico; //nuevo metodo que solo el puede usar y lo diferencia de los demas
 
 public:
     Guerrero(string n, int nv, int v, int a, int d);
