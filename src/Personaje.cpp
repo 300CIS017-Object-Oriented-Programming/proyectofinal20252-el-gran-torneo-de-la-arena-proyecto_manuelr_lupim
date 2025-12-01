@@ -32,7 +32,8 @@ void Personaje::setAtaque(int a) { ataque = a; }
 void Personaje::setDefensa(int d) { defensa = d; }
 
 
-//
+//Calcula daño real restando defensa, si el daño queda negativo, lo deja en 0, por lo que luego resta ese daño a la vida y evita que la vida quede negativa.
+
 void Personaje::recibirDanio(int danio) {
     int danioReal = danio - defensa;
     if (danioReal < 0) danioReal = 0;
@@ -45,6 +46,7 @@ void Personaje::curar(int cantidad) {
     if (vida > vidaMaxima) vida = vidaMaxima;
 }
 
+// lo mismo que el daño normal, solo que este "ignora" la proteccion, le quita directamente puntos a vida
 void Personaje::recibirDanioDirecto(int cantidad) {
     this->vida -= cantidad;
     if (this->vida < 0) this->vida = 0;
