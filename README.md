@@ -381,31 +381,40 @@ PersistenciaHeroesJSON --> Guild
 
 1. **Estructura de archivos del proyecto**
 
-    * *Explicación:* muestra la organización del código por responsabilidades (clases, inventario, arena, persistencia).
+    * *Explicación:* Aqui se puede ver la organización del código por responsabilidades (clases, inventario, arena, persistencia).
 ![img_1.png](img_1.png)
  ![img_3.png](img_3.png)
 
+
 2. **Pantalla del menú principal al ejecutar**
 
-    * *Explicación:* indica opciones disponibles.
+    * *Explicación:* Al ejecutar el archivo, se muestran las opciones disponibles.
 ![img.png](img.png)
+
 
 3. **Asignación de objetos en pre-combate**
 
-    * *Explicación:* muestra cómo disminuye stock al asignar y cómo se puede seleccionar el objeto en el heroe.
+    * *Explicación:* Se ve cómo disminuye stock al asignar y cómo se puede seleccionar el objeto en el heroe.
 ![img_2.png](img_2.png)
 ![img_4.png](img_4.png)
 ![img_5.png](img_5.png)
+   
+
+
 4. **Combate — Turno de héroe mostrando opciones**
 
     * *Explicación:* evidencia interactividad (atacar, usar objeto, habilidad).
 ![img_6.png](img_6.png)
+
+
 5. **Combate — Turno enemigo con golpe crítico / fallo**
 
     * *Explicación:* se mira como afecta la defensa en el combate.
 ![img_7.png](img_7.png)
+
+
 6. **Resumen final del combate**
-    * *Explicación:* ganador, supervivientes, turnos, objetos usados, en este caso el jugador perdio.
+    * *Explicación:* Cuando se acaba una partida, se muestra ganador, supervivientes, turnos, objetos usados, y, en este caso el jugador perdio.
 ![img_8.png](img_8.png)
 
 
