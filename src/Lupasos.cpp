@@ -45,7 +45,7 @@ void Lupasos::realizarAccion(Personaje* objetivo) {
         if (ataqueDoble) {
             cout << "Roar " << nombre << " realiza un ATAQUE DOBLE en forma de lobo" << endl;
             cout << "   Primer zarpazo: ";
-            objetivo->recibirDanio(danio);  //ataque completo  o daño cmpleto
+            objetivo->recibirDanio(danio);  //ataque completo o daño completo
             cout << objetivo->getNombre() << " recibe " << danio << " de dano." << endl;
 
             if (objetivo->estaVivo()) {

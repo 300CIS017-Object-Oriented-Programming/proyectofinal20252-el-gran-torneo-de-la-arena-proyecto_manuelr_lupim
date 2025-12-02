@@ -5,8 +5,8 @@
 
 class Tornado : public ObjetoMagico {
 public:
-    Tornado(int stock);
-    void usar(Personaje* objetivo) override;
+    Tornado(int stock); //ver cuantos hay disponibles
+    void usar(Personaje* objetivo) override; //Sobrescribe el métod.o puro de ObjetoMagico (Aquí ocurrirá el ataque del tornado.)
 };
 
 

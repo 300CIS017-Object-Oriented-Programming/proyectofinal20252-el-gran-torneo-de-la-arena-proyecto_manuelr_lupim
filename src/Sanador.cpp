@@ -16,7 +16,7 @@ void Sanador::realizarAccion(Personaje* objetivo) {             // se utiliza pa
     }
 
     cout << nombre << " ataca debilmente a " << objetivo->getNombre() << endl;
-    objetivo->recibirDanio(ataque / 2);              //el ataque de el sanador es la mitad de eficaz con respecto a su ataque base
+    objetivo->recibirDanio(ataque / 2);              //el ataque de el sanador es la mitad de eficaz con respecto a su ataque base, ya que principalmente cura, no ataca
 }
 
 void Sanador::curarAliado(vector<Personaje*>& aliados) {
@@ -24,14 +24,14 @@ void Sanador::curarAliado(vector<Personaje*>& aliados) {
     int menorVida = 999999;         // sirve para asegurar que cualquier aliado vivo este por debajo de ese numero
 
     for (Personaje* aliado : aliados) {
-        if (aliado->estaVivo() && aliado != this && aliado->getVida() < menorVida) {
+        if (aliado->estaVivo() && aliado != this && aliado->getVida() < menorVida) {  // verifica que el personaje este vivo, asi lo pueda curar
             objetivo = aliado;
             menorVida = aliado->getVida();
         }
     }
 
     if (objetivo) {
-        int efectividad = 60 + (rand() % 41);  //la efectividad genera un numero entre 0 y 40 y este se suma con 60 dando un numero entre 60 y 100
+        int efectividad = 60 + (rand() % 41);  //cuando encuentra el aliado, la efectividad genera un numero entre 0 y 40 y este se suma con 60 dando un numero entre 60 y 100
         int curacion = (30 * efectividad) / 100;  // con la efectividad se puede saber la curacion que de base es 30 pero puede bajar su efectividad
 
         cout << nombre << " canaliza energia curativa. Efectividad: "

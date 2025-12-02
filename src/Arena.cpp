@@ -1,3 +1,5 @@
+#include <cstdlib>
+#include <ctime>
 #include "Arena.h"
 #include "Guerrero.h"
 #include "Mago.h"
@@ -5,12 +7,14 @@
 #include "Berserker.h"
 #include "Lupasos.h"
 #include <iostream>
-#include <cstdlib>
-#include <ctime>
 
 using std::cin;
 using std::cout;
 using std::endl;
+
+
+//Guarda el puntero a la Guild del jugador. Turno inicial = 1 y Objetos usados = 0.
+
 
 Arena::Arena(Guild* guild) : guildJugador(guild), turnoActual(1), objetosUsados(0) {}
 
@@ -20,6 +24,7 @@ Arena::~Arena() {
     }
 }
 
+//enemigos iniciales
 void Arena::inicializarOponentes() {
     oponentes.push_back(new Guerrero("Dravos", 5, 100, 22, 12));
     oponentes.push_back(new Mago("Selene", 5, 70, 28, 6));
@@ -33,10 +38,11 @@ void Arena::inicializarOponentes() {
     }
 }
 
+
 void Arena::iniciarCombate() {
     cout << "\n=== COMIENZA EL COMBATE ===" << endl;
 
-    while (true) {
+    while (true) {                                                          //hay combate hasta que uno de los equipos muera
         cout << "\n========================================" << endl;
         cout << "--- TURNO " << turnoActual << " ---" << endl;
         cout << "========================================" << endl;
@@ -57,7 +63,7 @@ void Arena::iniciarCombate() {
             cout << "\n--- Oponentes disponibles ---" << endl;
             vector<Personaje*> oponentesVivos;
             int index = 1;
-            for (Personaje* op : oponentes) {
+            for (Personaje* op : oponentes) {    //muestra oponentes que pueden ser atacados
                 if (op->estaVivo()) {
                     cout << index << ". " << op->getNombre() << " (" << op->getRol()
                          << ") - Vida: " << op->getVida() << endl;
@@ -78,7 +84,7 @@ void Arena::iniciarCombate() {
 
             // Verificar si el heroe tiene objetos disponibles (simplificado)
             if (!guildJugador->getInventario().empty()) {
-                cout << "3. Usar objeto magico" << endl;
+                cout << "3. Usar objeto magico" << endl;  //el codigo depende si el objeto es algo que hace daño al enemigo o si sirve para los amigos
             }
 
             cout << "Opcion: ";
@@ -252,6 +258,8 @@ bool Arena::equipoEliminado(const vector<Personaje*>& equipo) const {
     return true;
 }
 
+
+//
 void Arena::mostrarResumen(const string& ganador) const {
     cout << "\n========================================" << endl;
     cout << "=== FIN DEL COMBATE ===" << endl;

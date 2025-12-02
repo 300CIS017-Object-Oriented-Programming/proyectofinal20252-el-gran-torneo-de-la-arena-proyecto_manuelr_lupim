@@ -6,7 +6,7 @@ using std::cout;
 using std::endl;
 
 Berserker::Berserker(string n, int nv, int v, int a, int d)
-    : Personaje(n, nv, v, a, d, "Berserker"), modoFuria(false), turnosEnFuria(0) {}   //empieza calmado y no no tiene turnos en furia aun
+    : Personaje(n, nv, v, a, d, "Berserker"), modoFuria(false), turnosEnFuria(0) {}   //empieza calmado y no tiene turnos en furia aun
 
 void Berserker::activarFuria() {
     if (!modoFuria) {              //la furia se activa si no estaba en furia antes
@@ -40,7 +40,7 @@ void Berserker::realizarAccion(Personaje* objetivo) {
 
     // Realizar ataque
     int danio = ataque;
-    int variacion = rand() % 11 - 5; // -5 a +5
+    int variacion = rand() % 11 - 5; // -5 a +5 (falta de precicion)
     danio += variacion;
 
     if (danio < 0) danio = 0; //si el daño es menor a 0 siempre cera cero y no un num negativo

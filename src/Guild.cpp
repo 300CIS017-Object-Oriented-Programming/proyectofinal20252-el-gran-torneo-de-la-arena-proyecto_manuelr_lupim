@@ -1,4 +1,3 @@
-#include "guild.h"
 #include "Guild.h"
 #include "Guerrero.h"
 #include "Mago.h"
@@ -19,10 +18,11 @@ using std::cin;
 using std::cout;
 using std::endl;
 
-Guild::Guild(string nombre) : nombreGuild(nombre), contadorId(1) {}
+Guild::Guild(string nombre) : nombreGuild(nombre), contadorId(1) {}  //Inicializa nombreGuild y deja contadorId en 1.*
+
 
 Guild::~Guild() {
-    for (auto& par : heroes) {
+    for (auto& par : heroes) {  //recorre el unordered_map y deletea cada Personaje*. Luego itera el inventario y delete cada objeto.
         delete par.second;
     }
     for (ObjetoMagico* obj : inventario) {
@@ -30,6 +30,7 @@ Guild::~Guild() {
     }
 }
 
+//Crea héroes por defecto y objetos con stock inicial.
 void Guild::inicializarHeroes() {
     agregarHeroe(new Guerrero("Arthos", 5, 120, 25, 15));
     agregarHeroe(new Mago("Lyra", 5, 80, 30, 8));
@@ -45,6 +46,14 @@ void Guild::inicializarHeroes() {
     agregarObjeto(new DagaSombria(3));
 }
 
+
+
+
+// Si heroe es nulo se sale
+// Se usa getNombre() como clave única. Si ya existe esa clave: informa y elimina el puntero que pasó el llamador
+// evita fugas si el llamador creó un new. Si no existe, lo guarda en el unordered_map.
+
+
 void Guild::agregarHeroe(Personaje* heroe) {
     if (!heroe) return;
 
@@ -58,7 +67,7 @@ void Guild::agregarHeroe(Personaje* heroe) {
     }
 }
 
-//VER QUE ES
+//busca y lo borra
 void Guild::eliminarHeroe(string nombre) {
     auto it = heroes.find(nombre);
     if (it != heroes.end()) {
@@ -70,11 +79,13 @@ void Guild::eliminarHeroe(string nombre) {
     }
 }
 
+//solo busca
 Personaje* Guild::buscarHeroe(string nombre) {
     auto it = heroes.find(nombre);
     return (it != heroes.end()) ? it->second : nullptr;
 }
 
+//solo muestra
 void Guild::listarHeroes() const {
     cout << "\n=== Heroes de " << nombreGuild << " ===" << endl;
     if (heroes.empty()) {
@@ -87,6 +98,8 @@ void Guild::listarHeroes() const {
     }
 }
 
+
+// Añade el puntero al vector inventario y Guild pasa a ser propietaria del objeto.
 void Guild::agregarObjeto(ObjetoMagico* objeto) {
     if (objeto) {
         inventario.push_back(objeto);
@@ -115,6 +128,9 @@ vector<Personaje*> Guild::getHeroesVivos() const {
     return vivos;
 }
 
+
+// Devuelve referencia al vector interno del inventario. Permite modificar inventario desde fuera (como asignar objetos).
+
 vector<ObjetoMagico*>& Guild::getInventario() {
     return inventario;
 }
@@ -122,6 +138,12 @@ vector<ObjetoMagico*>& Guild::getInventario() {
 string Guild::getNombre() const {
     return nombreGuild;
 }
+
+
+
+
+
+//PERSISTENCIA EN JSON
 void Guild::guardarHeroesJSON(const std::string& filename) const {
     try {
         nlohmann::json j;

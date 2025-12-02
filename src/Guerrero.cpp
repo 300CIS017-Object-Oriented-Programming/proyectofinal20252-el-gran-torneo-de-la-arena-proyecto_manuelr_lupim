@@ -1,7 +1,8 @@
 #include "Guerrero.h"
-#include <iostream>
 #include <cstdlib> //para el rand
 #include <ctime>
+#include <iostream>
+
 using std::string;
 using std::cin;
 using std::cout;

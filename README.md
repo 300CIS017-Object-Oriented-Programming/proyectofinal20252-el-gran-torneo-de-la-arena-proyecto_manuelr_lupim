@@ -268,7 +268,7 @@ classDiagram
         + obtenerHeroe(int)
     }
 
-Guild o-- Inventario  :"Esta dentro de"
+Guild o-- Inventario  :Esta dentro de
 Guild "1" o-- "*" Personaje
 Inventario "1" o-- "*" ObjetoMagico
 Personaje o-- ObjetoMagico
@@ -355,7 +355,7 @@ classDiagram
     }
 
 
-Guild o-- Inventario  :"Esta dentro de"
+Guild o-- Inventario  : Esta dentro de
 Guild "1" o-- "*" Personaje : heroes
 Guild "1" o.. "*" Personaje : enemigos
 Inventario --> ObjetoMagico

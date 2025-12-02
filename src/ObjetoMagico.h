@@ -5,14 +5,14 @@
 #include "Personaje.h"
 using std::string;
 
-class ObjetoMagico {
+class ObjetoMagico {   //solo las hijas pueden acceder
 protected:
     string nombre;
     string descripcion;
     int stock;
 
 public:
-    ObjetoMagico(string n, string desc, int s);
+    ObjetoMagico(string n, string desc, int s);  //el nombre, la descripcion del objeto, y el stock que hay
     virtual ~ObjetoMagico();
 
     string getNombre() const;
