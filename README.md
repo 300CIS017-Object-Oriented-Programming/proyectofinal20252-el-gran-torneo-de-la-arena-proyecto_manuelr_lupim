@@ -25,8 +25,8 @@ En este proyecto se crea juego/simulador por turnos en C++, que hacen parte de u
 El codigo simula enfrentamientos por turnos entre un equipo de héroes (que sería el Guild) y los enemigos.
 
 * Cada personaje jugable tiene ciertos Atributos: `id`, `nombre`, `nivel`, `vida`, `ataque`, `defensa`, y `rol` (que van determinado su comportamiento).
-* Hay clases base (`Personaje`) y subclases hijas (`Guerrero`, `Mago`, `Sanador`, `Paladin`, `Arquero`, `Asesino`, etc.).
-* Un `Inventario` encargado de gestionar las **categorías** de objetos mágicos. Antes del combate se asignan objetos a héroes; en combate solo pueden usarlos una vez por batalla y una vez usados se eliminan del inventario global.
+* Hay clases base (`Personaje`) y subclases hijas (`Guerrero`, `Mago`, `Sanador`, `Berserker`, `Lupassos`).
+*  Objetos mágicos. Antes del combate se asignan objetos a héroes; en combate solo pueden usarlos una vez por batalla y una vez usados se eliminan del inventario global.
 * `Arena` es basicamente el motor de combate: recibe los participantes y corre por medio de turnos (primero todos los héroes, luego los enemigos).
 * La persistencia de héroes se realiza con JSON (archivo `heroes_guardados.json`), para poder cargar/guardar configuraciones.
 
@@ -56,13 +56,12 @@ El codigo simula enfrentamientos por turnos entre un equipo de héroes (que ser�
   Arena.h / Arena.cpp            // motor de combate
   Guild.h / Guild.cpp            // gestion de heroes y enemigos
   Personaje.h / Personaje.cpp    // clase base
-  Heroe.h / Heroe.cpp            // heroe + subtipos (Guerrero, Mago, ...)
-  Oponente.h / Oponente.cpp      // enemigos
-  Inventario.h / Inventario.cpp  // catalogo/categorias y stock global
+                                 // heroe + subtipos (Guerrero, Mago, ...)
+                                 
   ObjetoMagico.h / ObjetoMagico.cpp // prototipos y objetos concretos (PocionVida, AmuletoFuria, etc.)
   PersistenciaHeroesJSON.h / .cpp // guardar / cargar
   json.hpp                       // single-header nlohmann::json
-  ... (otros objetos y clases)
+  ... (otros objetos y clases hijas)
 ```
 
 ---
@@ -73,20 +72,21 @@ El codigo simula enfrentamientos por turnos entre un equipo de héroes (que ser�
 Al ejecutar verás un menú principal con opciones como:
 
 ```
-1) Gestionar Guild (listar/agregar/retirar)
-2) Gestionar Inventario (crear/listar/consultar/actualizar/eliminar)
-3) Asignar/Retirar objetos a heroes (PRE-COMBATE)
-4) Iniciar combate (interactivo)
-5) Guardar heroes (JSON)
-6) Cargar heroes desde JSON
-7) Salir
+1) Ver heroes Guild (listar/agregar/retirar)
+2) Agregar nuevo heroe (un personaje nuevo que queramos usando una de las clases ya creadas)
+3) Eliminar un heroe
+4) Ver inventario (objetos magicos restantes) 
+5)Iniciar combate (interactivo)
+6) Guardar heroes (JSON)
+7) Cargar heroes desde JSON
+8) Salir
 ```
 
 Flujo típico:
 
 1. `2) Gestionar Inventario` — crear categorias (ej. `pocion_vida`) y stock.
 2. `1) Gestionar Guild` — ver heroes precargados o agregar nuevos.
-3. `3) Asignar/Retirar objetos` — asignar objetos a héroes antes del combate (se decrementa stock).
+3. `3) Asignar/Retirar objetos` — asignar objetos a héroes durante el combate (se decrementa stock y se gasta el turno del heroe en la ronda).
 4. `4) Iniciar combate` — combate por turnos: para cada heroe vivo eliges atacar / usar objeto / habilidad.
 5. Al finalizar la batalla se muestra resumen (equipo ganador, heroes supervivientes, turnos, objetos usados).
 
@@ -107,27 +107,21 @@ Objetos usados: 3
 
 ## 5) Inventario y objetos (reglas concretas)
 
-* **Antes del combate (preparacion):**
-
-    * El jugador puede asignar o retirar objetos a sus héroes desde el inventario.
-    * El asignar disminuye el stock global; retirar devuelve stock si el objeto NO fue usado durante el combate.
-    * Máximo 2 objetos por héroe (ejemplo en la implementación).
 * **Durante el combate:**
 
-    * Solo los héroes con objeto asignado pueden usarlo.
+    * Los heroes tienen la opcion de atacar o usar un objeto magico
     * Cada objeto tiene `usosPorCombate` (normalmente 1).
     * Al usarlo se marca como usado y su efecto se aplica (curacion, daño, buff).
 * **Después del combate:**
 
     * Objetos usados se eliminan del inventario global (no se recuperan).
-    * Objetos no usados pueden devolverse al inventario y ser reutilizados.
+    * Objetos no usados quedan asignados a los heroes y pueden ser reutilizados.
 
 **Objetos implementados (ejemplos)**
 
 * `PocionVida`: cura aleatoria entre 20–40.
 * `AmuletoFuria`: +5..+10 ataque durante 2 turnos (simulado).
 * `EscudoBendito`: +10..+20 defensa por 1 turno.
-* `BolaHielo`, `PergaminoEnergia`, `CinturonResiliencia` (otros objetos añadidos) — ver `ObjetosMagicos.h/.cpp`.
 
 ---
 
@@ -274,9 +268,10 @@ classDiagram
         + obtenerHeroe(int)
     }
 
+Guild o-- Inventario  :"Esta dentro de"
 Guild "1" o-- "*" Personaje
 Inventario "1" o-- "*" ObjetoMagico
-Personaje "0..2" o-- ObjetoMagico
+Personaje o-- ObjetoMagico
 
 ```
 
@@ -359,6 +354,8 @@ classDiagram
         + cargar(Guild,string)
     }
 
+
+Guild o-- Inventario  :"Esta dentro de"
 Guild "1" o-- "*" Personaje : heroes
 Guild "1" o.. "*" Personaje : enemigos
 Inventario --> ObjetoMagico
@@ -373,8 +370,9 @@ PersistenciaHeroesJSON --> Guild
 
 1. **Estructura de archivos del proyecto**
     * *Explicación:* muestra la organización del código por responsabilidades (clases, inventario, arena, persistencia).
+   
 ![img_1.png](img_1.png)
- ![img_3.png](img_3.png)
+![img_3.png](img_3.png)
 
 2. **Pantalla del menú principal al ejecutar**
     * *Explicación:* indica opciones disponibles.
@@ -404,6 +402,11 @@ PersistenciaHeroesJSON --> Guild
 ![img_10.png](img_10.png)
 ![img_11.png](img_11.png)
     
+
+
+// **NOTA:** Profe por mas que intentamos no pudimos acomodar las fotos para que se vieran organizadas y sin mezclarse todo el parrafo, igualmente asi como esta organizado es medio tangible la informacio.
+
+Si mira el readme en *Editor and preview* ahi si se alcanza a ver todas las imagenes y los parrafos bien organizados.
       
 
 
