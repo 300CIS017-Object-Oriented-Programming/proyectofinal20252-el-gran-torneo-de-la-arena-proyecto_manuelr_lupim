@@ -21,7 +21,7 @@ public:
     void decrementarStock();
     void incrementarStock();
 
-    virtual void usar(Personaje* objetivo) = 0;
+    virtual void usar(Personaje* objetivo) = 0;  //classe abstracta, cada clase debe definir esto
     virtual void mostrarInfo() const;
 };
 #endif //PROYECTOFINAL20252_EL_GRAN_TORNEO_DE_LA_ARENA_PROYECTO_MANUELR_LUPIM_OBJETOMAGICO_H

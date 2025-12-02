@@ -5,8 +5,8 @@
 
 class Berserker : public Personaje {
 private:
-    bool modoFuria;
-    int turnosEnFuria;
+    bool modoFuria;  //indica si esta en modo furia o no
+    int turnosEnFuria;  //controla cuantos tuernos dura el modo furia
 
 public:
     Berserker(string n, int nv, int v, int a, int d);

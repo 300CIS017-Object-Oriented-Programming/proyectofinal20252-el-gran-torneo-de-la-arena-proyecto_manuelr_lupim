@@ -9,7 +9,7 @@ class Sanador : public Personaje {
 public:
     Sanador(string n, int nv, int v, int a, int d);
     void realizarAccion(Personaje* objetivo) override;
-    void curarAliado(vector<Personaje*>& aliados);
+    void curarAliado(vector<Personaje*>& aliados);  //es el metodo para poder curar a un aliado dentro de los personajes de la guild
 };
 
 
